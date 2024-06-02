@@ -1,0 +1,12 @@
+@extends('base.front-end')
+
+@section('content')
+   @php
+       $docData= isset($page->docData) ? $page->docData : [];
+       // dd($docData);
+   @endphp
+{{-- begin:section1 --}}
+{{-- end:section2 --}}
+@section('scripts')
+@include('base.front-end.js')
+@endsection

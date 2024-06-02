@@ -1,0 +1,33 @@
+/**
+ * Custom css for babayama web app
+*/
+.web-book-date-scroll .swiper-slide{
+    width: auto;
+}
+.web-book-check label.web-book-check-label{
+    padding: 5px 12px;
+    width: 65px;
+    border: 1px solid #B2BAC6;
+    box-sizing: border-box;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.web-book-check .web-book-check-text{
+    text-align: center;
+    display: block;
+    color: #B2BAC6;
+}
+.web-book-check-radio:checked + label.web-book-check-label{
+    border: 1px solid #724C9F;
+    background-color: #724C9F;
+}
+.web-book-check-radio:checked + label.web-book-check-label .web-book-check-text{
+    color: white;
+}
+.web-book-success-img{
+    width: 100px;
+}
+.web-book-wrapper{
+    display: none;
+}

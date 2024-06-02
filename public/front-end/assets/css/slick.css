@@ -1,0 +1,358 @@
+/* Slider */
+.slick-slider
+{
+    position: relative;
+
+    display: block;
+    box-sizing: border-box;
+
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -ms-touch-action: pan-y;
+        touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list
+{
+    position: relative;
+
+    display: block;
+    overflow: hidden;
+
+    margin: 0;
+    padding: 0;
+}
+.slick-list:focus
+{
+    outline: none;
+}
+.slick-list.dragging
+{
+    cursor: pointer;
+    cursor: hand;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list
+{
+    -webkit-transform: translate3d(0, 0, 0);
+       -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+         -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+}
+
+.slick-track
+{
+    position: relative;
+    top: 0;
+    left: 0;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.slick-track:before,
+.slick-track:after
+{
+    display: table;
+
+    content: '';
+}
+.slick-track:after
+{
+    clear: both;
+}
+.slick-loading .slick-track
+{
+    visibility: hidden;
+}
+
+.slick-slide
+{
+    display: none;
+    float: left;
+
+    height: 100%;
+    min-height: 1px;
+}
+[dir='rtl'] .slick-slide
+{
+    float: right;
+}
+.slick-slide img
+{
+    display: block;
+}
+.slick-slide.slick-loading img
+{
+    display: none;
+}
+.slick-slide.dragging img
+{
+    pointer-events: none;
+}
+.slick-initialized .slick-slide
+{
+    display: block;
+}
+.slick-loading .slick-slide
+{
+    visibility: hidden;
+}
+.slick-vertical .slick-slide
+{
+    display: block;
+
+    height: auto;
+
+    border: 1px solid transparent;
+}
+.slick-arrow.slick-hidden {
+    display: none;
+}
+
+/** Home page **/
+.hero{background-color: #34378F; height: 90vh;}
+.slick-list{top:0; }
+.hero-text h2 {
+  margin-bottom: 50px;
+}
+
+.hero-text .hero {
+  position: relative;
+}
+
+.header-content h2
+{
+	color:#fff;    font-family: Catamaran;	font-weight:400;
+}
+.header-content h2 b
+{
+	font-family: Catamaran-ExtraBold;
+}
+.slick-dots li:nth-child(1) a:after {
+    content: "Nation’s Nutrition";
+    position: relative;
+    font-size: 16px;
+	color:#fff;
+	padding-left: 14px;
+    font-family: RidleyGrotesk-Regular,sans-serif;
+    font-weight: 500;
+}
+.slick-dots li:nth-child(2) a:after {
+    content: "Farmer Empowerment";
+    position: relative;
+    font-size: 16px;
+	color:#fff;
+	padding-left: 14px;
+    font-family: RidleyGrotesk-Regular,sans-serif;
+    font-weight: 500;
+}
+.hero-text .hero .hero-slide a:hover span {
+  color: #033a71;
+}
+
+:focus{outline:none;}
+.hero .hero-slide img {
+  float: left; width: 670px;
+  height: 600px;
+  object-fit: cover;
+  object-position: right center;
+}
+
+.hero .hero-slide .header-content {
+    top: 15%;
+    position: absolute;
+	z-index: 1;
+    /*left: 7%;    
+	position: absolute;
+	max-width: 550px;
+	width: 100%; */
+}
+
+.slide-content {
+  padding: 10px 20px 10px 0;
+}
+
+.slide-content .h1 {
+  font-size: 62px
+}
+
+.btn-primary {
+  background-color: #5302FE;
+  border: #111;
+  border-radius: 0;
+}
+
+/** Text Animation **/
+
+@-webkit-keyframes fadeInUpSD {
+  0% {
+      opacity: 0;
+      -webkit-transform: translateY(100px);
+      transform: translateY(100px)
+  }
+
+  100% {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none
+  }
+}
+
+@keyframes fadeInUpSD {
+  0% {
+      opacity: 0;
+      -webkit-transform: translateY(100px);
+      transform: translateY(100px)
+  }
+
+  100% {
+      opacity: 1;
+      -webkit-transform: none;
+      transform: none
+  }
+}
+
+.fadeInUpSD {
+  -webkit-animation-name: fadeInUpSD;
+  animation-name: fadeInUpSD;
+}
+
+.slick-active .slide-content {
+  animation-name: fadeInUpSD;
+  animation-duration: 1s;
+  opacity: 1;
+  width: 100%;
+  padding: 10px 20px 30px 0;
+}
+
+/* Text Animation End **/
+
+.slick-dots {
+    position: relative;
+    bottom: 200px;
+    width: 1250px;
+    margin: 0 auto;
+}
+
+.slick-dots li {
+	position: relative;
+    display: inline-block;
+    width: auto;
+    height: 20px;
+    margin: 0 34px 0 0;
+    padding: 0;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 26px;
+}
+
+.slick-dots li a {
+    color: #fff;
+	font-family: Catamaran;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 30px;
+}
+.slick-dots li.slick-active a {
+	color: #EF3B2D;
+}
+
+.slick-dots li button {
+      font-size: 0;
+    line-height: 0;
+    display: block;
+    padding: 5px;
+    outline: none;
+    width: 12px;
+    height: 13px;
+    border: 2px solid;
+    margin: 3px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+}
+
+.slick-dots li button::before {
+  font-size: 18px;
+  color: #fff;
+  opacity: 1;
+}
+
+.slick-active button {
+  background: #fcb514;
+}
+li.slick-active button {
+    background-color: #fcb514;
+} 
+.hero-slide
+{
+	width: 100%;
+    height: 100vh !important;
+	background-size: cover !important;
+}
+/* Media Queries */
+
+@media (max-width: 767px) {
+    .header-content h2 {
+    font-size: 24px;
+        }
+        .hero-slide {
+    height: 40vh !important;
+    }
+    .hero {
+    height: 40vh;
+    }
+  .hero-text .hero .hero-slide a {
+    padding-top: 0.8rem;
+  }
+  .hero {
+    background-color: #34378F;
+    height: 40vh;
+}
+
+  .hero-text .hero .hero-slide a span {
+    font-size: 20px;
+    margin-top: 0.5rem;
+  }
+    .banner_overlay:after {
+    background: linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 75%);
+    }
+  .hero .hero-slide .header-content {
+    -webkit-transform: translateX(0);
+    transform: translateX(0%);
+    margin: 0 auto;
+	top: 60%;
+  }
+  .slick-dots li:nth-child(1) a:after, .slick-dots li:nth-child(2) a:after {
+	  display:none;
+  }
+	.hero .hero-slide:nth-child(1)
+	{
+		    background-position: center !important;
+	}
+	.hero .hero-slide:nth-child(2)
+	{
+		    background-position: center !important;
+	}
+	.slick-dots {
+    bottom: 120px;
+    left: -24px;
+	}
+
+}
+@media (min-width: 1600px) {
+	.hero .hero-slide .header-content {
+    top: 30%;
+    position: absolute;
+	z-index: 1;
+	}
+}

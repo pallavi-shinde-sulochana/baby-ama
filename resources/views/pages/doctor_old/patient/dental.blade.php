@@ -1,0 +1,1550 @@
+@extends('base.doctor-dashboard')
+@section('doctor-content')
+    @php
+        $appointment = $appoinment;
+        $get = isset($getdata->dental) ? json_decode($getdata->dental) : [];
+    @endphp
+
+    <section class="doctor-patinet-appointment pt-5">
+        <section class="doctor-patinet-appointment pt-5">
+            <div class="header">
+                <div class="row sticky-top mx-0 px-4 w-100 align-items-center">
+                    <div class="col-1 position-absolute">
+                        <a href="{{ URL::previous() }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"
+                                fill="none">
+                                <path
+                                    d="M12.7599 25.0934C12.5066 25.0934 12.2533 25 12.0533 24.8L3.95992 16.7067C3.57326 16.32 3.57326 15.68 3.95992 15.2934L12.0533 7.20003C12.4399 6.81337 13.0799 6.81337 13.4666 7.20003C13.8533 7.5867 13.8533 8.2267 13.4666 8.61337L6.07992 16L13.4666 23.3867C13.8533 23.7734 13.8533 24.4134 13.4666 24.8C13.2799 25 13.0133 25.0934 12.7599 25.0934Z"
+                                    fill="#344054" />
+                                <path
+                                    d="M27.3336 17H4.89355C4.34689 17 3.89355 16.5467 3.89355 16C3.89355 15.4533 4.34689 15 4.89355 15H27.3336C27.8802 15 28.3336 15.4533 28.3336 16C28.3336 16.5467 27.8802 17 27.3336 17Z"
+                                    fill="#344054" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="col-11 text-center">
+                        <h2 class="mb-0">Dental Case Record</h2>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Common Patient Profile Start --}}
+            @include('pages.doctor.patient.common-patient-profile')
+
+            <form action="{{ route('doctor.patient.dental.post', $patient->id) }}" method="POST">
+                @csrf
+                <input type="hidden" name="app_status" value="{{ $app_status }}">
+                <input type="hidden" name="appointment_id" value="{{ $appointment->id }}">
+                <div class="row py-5 my-5 pediatric-form-fields  dental-form">
+                    <div class="col-12 col-md-9 col-xl-7">
+                        <div class="mb-4">
+                        <label for="Chief Complaints" class="mx-0 form-label">Chief Complaints </label>
+                        <textarea class="form-control" id="chief_complaint" name="chief_complaints"><?php if (isset($get->chief_complaints)) {
+                            echo $get->chief_complaints;
+                        } ?></textarea>
+                        </div>
+                        <div class="mb-4">
+                        <label for="H/O Presenting illness" class="mx-0 form-label">H/O Presenting illness </label>
+                        <textarea class="form-control" id="h_o_presenting_illness" name="h_o_presenting_illness"><?php if (isset($get->h_o_presenting_illness)) {
+                            echo $get->h_o_presenting_illness;
+                        } ?></textarea>
+                        </div>
+                        <div class="mb-4">
+                        <label for="Medical History" class="mx-0 form-label">Medical History </label>
+                        <textarea class="form-control" id="medical_history" name="medical_history"><?php if (isset($get->medical_history)) {
+                            echo $get->medical_history;
+                        } ?></textarea>
+                        </div>
+            
+                        <label for="Dental History" class="form-label">Dental History : </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="1. Is this the child’s first visit to the dentist?" class="form-label">1. Is this the
+                            child’s first visit to the dentist? </label>
+                        <div class=""><label class="checkbox">
+                                <input type="checkbox" name="child_visit[]" value="Yes" <?php if (isset($get->child_visit)) {
+                                    if (in_array('Yes', $get->child_visit)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                                <span></span>
+                                Yes
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="child_visit[]" value="No" <?php if (isset($get->child_visit)) {
+                                    if (in_array('No', $get->child_visit)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+
+                                <span></span>
+                                No
+                            </label><input type="text" class="form-control-food w-100px" id="child_visit_answer"
+                                name="child_visit_answer" value="<?php if (isset($get->child_visit_answer)) {
+                                    echo $get->child_visit_answer;
+                                } ?>
+                            "></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="2. Has the child had any unpleasant medical or dental experience?" class="form-label">2.
+                            Has
+                            the child had any unpleasant medical or dental experience? </label>
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="dental_experience[]" value="Yes" <?php if (isset($get->dental_experience)) {
+                                    if (in_array('Yes', $get->dental_experience)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                                <span></span>
+                                Yes
+                            </label> <label class="checkbox">
+                                <input type="checkbox" name="dental_experience[]" value="No" <?php if (isset($get->dental_experience)) {
+                                    if (in_array('No', $get->dental_experience)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                                <span></span>
+                                No
+                            </label> </div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="3. Has the child had any oral trauma?" class="form-label">3. Has the child had any oral
+                            trauma? </label>
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="oral_truma[]" value="Yes" <?php if (isset($get->oral_truma)) {
+                                    if (in_array('Yes', $get->oral_truma)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                                <span></span>
+                                Yes
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="oral_truma[]" value="No" <?php if (isset($get->oral_truma)) {
+                                    if (in_array('No', $get->oral_truma)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                                <span></span>
+                                No
+                            </label><input type="text" class="form-control-food w-100px" id="oral_truma_answer"
+                                name="oral_truma_answer" value="<?php if (isset($get->oral_truma_answer)) {
+                                    echo $get->oral_truma_answer;
+                                } ?>
+                            "></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="4. Age of the child at first tooth eruption?" class="form-label">4. Age of the child at
+                            first tooth eruption? </label> <input type="text" class="form-control-food w-100px"
+                            id="tooth_eruption" name="tooth_eruption" value="<?php if (isset($get->tooth_eruption)) {
+                                echo $get->tooth_eruption;
+                            } ?>
+                        ">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="a. Problems, any" class="form-label">a. Problems, any </label> <input type="text"
+                            class="form-control-food" id="tooth_eruption_problems" name="tooth_eruption_problems"
+                            value="<?php if (isset($get->tooth_eruption_problems)) {
+                                echo $get->tooth_eruption_problems;
+                            } ?>
+                        ">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="b. Which tooth?" class="form-label">b. Which tooth? </label> <input type="text"
+                            class="form-control-food" id="tooth_eruption_which_tooth" name="tooth_eruption_which_tooth"
+                            value="<?php if (isset($get->tooth_eruption_which_tooth)) {
+                                echo $get->tooth_eruption_which_tooth;
+                            } ?>
+                        ">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Prenatal history :" class="form-label">Prenatal history : </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="1. Any illness/ trauma to the mother during pregnancy" class="form-label">1. Any
+                            illness/
+                            trauma to the mother during pregnancy </label>
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="prenatal_history_mother_pregnancy[]" value="Yes"
+                                    <?php if (isset($get->prenatal_history_mother_pregnancy)) {
+                                        if (in_array('Yes', $get->prenatal_history_mother_pregnancy)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Yes
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="prenatal_history_mother_pregnancy[]" value="No"
+                                    <?php if (isset($get->prenatal_history_mother_pregnancy)) {
+                                        if (in_array('No', $get->prenatal_history_mother_pregnancy)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                No
+                            </label></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="2. Drugs taken during pregnancy :" class="form-label">2. Drugs taken during pregnancy
+                            :
+                        </label> <input type="text" class="form-control-food" id="prenatal_history_mother_drugs"
+                            name="prenatal_history_mother_drugs" value="<?php if (isset($get->prenatal_history_mother_drugs)) {
+                                echo $get->prenatal_history_mother_drugs;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="3. Delivery " class="form-label">3. Delivery </label>
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="prenatal_history_mother_delivery[]" value="Full term"
+                                    <?php if (isset($get->prenatal_history_mother_delivery)) {
+                                        if (in_array('Full term', $get->prenatal_history_mother_delivery)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Full term
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="prenatal_history_mother_delivery[]" value="Pre term"
+                                    <?php if (isset($get->prenatal_history_mother_pregnancy)) {
+                                        if (in_array('Pre term', $get->prenatal_history_mother_pregnancy)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Pre term
+                            </label></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="4. Type" class="form-label">4. Type </label>
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="prenatal_history_type_option[]" value="Normal"
+                                    <?php if (isset($get->prenatal_history_type_option)) {
+                                        if (in_array('Normal', $get->prenatal_history_type_option)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Normal
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="prenatal_history_type_option[]" value="Forceps"
+                                    <?php if (isset($get->prenatal_history_type_option)) {
+                                        if (in_array('Forceps', $get->prenatal_history_type_option)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Forceps
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="prenatal_history_type_option[]" value="Caesarian"
+                                    <?php if (isset($get->prenatal_history_type_option)) {
+                                        if (in_array('Caesarian', $get->prenatal_history_type_option)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Caesarian
+                            </label></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Postnatal history :" class="form-label">Postnatal history : </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="1. Blood group :" class="form-label">1. Blood group : </label> <input type="text"
+                            class="form-control-food" id="postnatal_blood_group" name="postnatal_blood_group"
+                            value="<?php if (isset($get->postnatal_blood_group)) {
+                                echo $get->postnatal_blood_group;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="2. Whether jaundiced at birth? " class="form-label">2. Whether jaundiced at birth?
+                        </label>
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_jaundiced[]" value="Yes"
+                                    <?php if (isset($get->postnatal_history_jaundiced)) {
+                                        if (in_array('Forceps', $get->postnatal_history_jaundiced)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Yes
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_jaundiced[]" value="No"
+                                    <?php if (isset($get->postnatal_history_jaundiced)) {
+                                        if (in_array('No', $get->postnatal_history_jaundiced)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                No
+                            </label></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="3. Was the child breast fed?" class="form-label">3. Was the child breast fed? </label>
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_jaundiced[]" value="Yes"
+                                    <?php if (isset($get->postnatal_history_jaundiced)) {
+                                        if (in_array('Forceps', $get->postnatal_history_jaundiced)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Yes
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_jaundiced[]" value="No"
+                                    <?php if (isset($get->postnatal_history_jaundiced)) {
+                                        if (in_array('No', $get->postnatal_history_jaundiced)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                No
+                            </label></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="If yes, duration" class="form-label">If yes, duration </label>
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_child_breast_yes[]" value="6 months"
+                                    <?php if (isset($get->postnatal_history_child_breast_yes)) {
+                                        if (in_array('6 months', $get->postnatal_history_child_breast_yes)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                6 months
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_child_breast_yes[]" value="6-12 months"
+                                    <?php if (isset($get->postnatal_history_child_breast_yes)) {
+                                        if (in_array('6-12 months', $get->postnatal_history_child_breast_yes)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                6-12 months
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_child_breast_yes[]" value=">12 months"
+                                    <?php if (isset($get->postnatal_history_child_breast_yes)) {
+                                        if (in_array('>12 months', $get->postnatal_history_child_breast_yes)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                &gt;12 months
+                            </label></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="4. Was the child given blood transfusion?" class="form-label">4. Was the child given
+                            blood
+                            transfusion? </label>
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_blood_transfusion[]" value="Yes"
+                                    <?php if (isset($get->postnatal_history_blood_transfusion)) {
+                                        if (in_array('Yes', $get->postnatal_history_blood_transfusion)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Yes
+                            </label> <label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_blood_transfusion[]" value="No"
+                                    <?php if (isset($get->postnatal_history_blood_transfusion)) {
+                                        if (in_array('No', $get->postnatal_history_blood_transfusion)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                No
+                            </label></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="5. Did the child use nursing bottle?" class="form-label">5. Did the child use nursing
+                            bottle? </label>
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_nursing_bottle[]" value="Yes"
+                                    <?php if (isset($get->postnatal_history_nursing_bottle)) {
+                                        if (in_array('Yes', $get->postnatal_history_nursing_bottle)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Yes
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_nursing_bottle[]" value="No"
+                                    <?php if (isset($get->postnatal_history_nursing_bottle)) {
+                                        if (in_array('No', $get->postnatal_history_nursing_bottle)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                No
+                            </label></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="a. How long and how frequent :" class="form-label">a. How long and how frequent :
+                        </label>
+                        <input type="text" class="form-control-food" id="postnatal_nursing_bottle_long_frequent"
+                            name="postnatal_nursing_bottle_long_frequent" value="<?php if (isset($get->postnatal_nursing_bottle_long_frequent)) {
+                                echo $get->postnatal_nursing_bottle_long_frequent;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="b. Type of nipple used :" class="form-label">b. Type of nipple used : </label> <input
+                            type="text" class="form-control-food" id="postnatal_nursing_bottle_nipple_used"
+                            name="postnatal_nursing_bottle_nipple_used" value="<?php if (isset($get->postnatal_nursing_bottle_nipple_used)) {
+                                echo $get->postnatal_nursing_bottle_nipple_used;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="c. Does the child go to sleep bottle fed? :" class="form-label">c. Does the child go
+                            to
+                            sleep bottle fed? : </label>
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_nursing_bottle_sleep_fed[]" value="Yes"
+                                    <?php if (isset($get->postnatal_history_nursing_bottle_sleep_fed)) {
+                                        if (in_array('Yes', $get->postnatal_history_nursing_bottle_sleep_fed)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Yes
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_nursing_bottle_sleep_fed[]" value="No"
+                                    <?php if (isset($get->postnatal_history_nursing_bottle_sleep_fed)) {
+                                        if (in_array('No', $get->postnatal_history_nursing_bottle_sleep_fed)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                No
+                            </label></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="d. Content :" class="form-label">d. Content : </label>
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_nursing_bottle_content[]" value="Milk"
+                                    <?php if (isset($get->postnatal_history_nursing_bottle_content)) {
+                                        if (in_array('Milk', $get->postnatal_history_nursing_bottle_content)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Milk
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_nursing_bottle_content[]" value="Juice"
+                                    <?php if (isset($get->postnatal_history_nursing_bottle_content)) {
+                                        if (in_array('Juice', $get->postnatal_history_nursing_bottle_content)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Juice
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_nursing_bottle_content[]" value="Water"
+                                    <?php if (isset($get->postnatal_history_nursing_bottle_content)) {
+                                        if (in_array('Water', $get->postnatal_history_nursing_bottle_content)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Water
+                            </label><label class="checkbox">
+                                <input type="checkbox" name="postnatal_history_nursing_bottle_content[]" value="Others"
+                                    <?php if (isset($get->postnatal_history_nursing_bottle_content)) {
+                                        if (in_array('Others', $get->postnatal_history_nursing_bottle_content)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Others
+                            </label></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="6. Milestones of development" class="form-label">6. Milestones of development </label>
+                        <textarea class="form-control" id="postnatal_history_milestones_of_development"
+                            name="postnatal_history_milestones_of_development"><?php if (isset($get->postnatal_history_milestones_of_development)) {
+                                echo $get->postnatal_history_milestones_of_development;
+                            } ?></textarea>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Oral hygiene practices" class="form-label">Oral hygiene practices </label>
+                        <textarea class="form-control" id="oral_hygiene_practices" name="oral_hygiene_practices"><?php if (isset($get->oral_hygiene_practices)) {
+                            echo $get->oral_hygiene_practices;
+                        } ?></textarea>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Diet history" class="form-label">Diet history </label><label class="checkbox">
+                            <input type="checkbox" name="diet_history[]" value="Veg" <?php if (isset($get->diet_history)) {
+                                if (in_array('Veg', $get->diet_history)) {
+                                    echo 'checked';
+                                }
+                            } ?>>
+                            <span></span>
+                            Veg
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="diet_history[]" value="Non-veg" <?php if (isset($get->diet_history)) {
+                                if (in_array('Non-veg', $get->diet_history)) {
+                                    echo 'checked';
+                                }
+                            } ?>>
+                            <span></span>
+                            Non-veg
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="diet_history[]" value="Mixed" <?php if (isset($get->diet_history)) {
+                                if (in_array('Mixed', $get->diet_history)) {
+                                    echo 'checked';
+                                }
+                            } ?>>
+                            <span></span>
+                            Mixed
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Clinical examination" class="form-label">Clinical examination </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="General examination" class="form-label">General examination </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Height" class="form-label">Height </label> <input type="text"
+                            class="form-control-food w-100px" id="general_examination_height"
+                            name="general_examination_height" value="<?php if (isset($get->general_examination_height)) {
+                                echo $get->general_examination_height;
+                            } ?>"> CM
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Weight" class="form-label">Weight </label> <input type="text"
+                            class="form-control-food w-100px" id="general_examination_weight"
+                            name="general_examination_weight" value="<?php if (isset($get->general_examination_weight)) {
+                                echo $get->general_examination_weight;
+                            } ?>"> Kg
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Body Type" class="form-label">Body Type </label><label class="checkbox">
+                            <input type="checkbox" name="general_examination_body_type[]" value="Ectomorph"
+                                <?php if (isset($get->general_examination_body_type)) {
+                                    if (in_array('Ectomorph', $get->general_examination_body_type)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Ectomorph
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="general_examination_body_type[]" value="Endomorph"
+                                <?php if (isset($get->general_examination_body_type)) {
+                                    if (in_array('Endomorph', $get->general_examination_body_type)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Endomorph
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="general_examination_body_type[]" value="Mesomorph"
+                                <?php if (isset($get->general_examination_body_type)) {
+                                    if (in_array('Mesomorph', $get->general_examination_body_type)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Mesomorph
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Speech" class="form-label">Speech </label> <input type="text"
+                            class="form-control-food w-200px" id="general_examination_speech"
+                            name="general_examination_speech" value="<?php if (isset($get->general_examination_speech)) {
+                                echo $get->general_examination_speech;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Extra oral examination" class="form-label">Extra oral examination </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Shape Of Head" class="form-label">Shape Of Head </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_shape_of_head[]" value="Meso"
+                                <?php if (isset($get->extra_oral_examination_shape_of_head)) {
+                                    if (in_array('Meso', $get->extra_oral_examination_shape_of_head)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Meso
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_shape_of_head[]" value="Dolicho"
+                                <?php if (isset($get->extra_oral_examination_shape_of_head)) {
+                                    if (in_array('Dolicho', $get->extra_oral_examination_shape_of_head)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Dolicho
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_shape_of_head[]" value="Brachycephalic"
+                                <?php if (isset($get->extra_oral_examination_shape_of_head)) {
+                                    if (in_array('Brachycephalic', $get->extra_oral_examination_shape_of_head)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Brachycephalic
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Facial form" class="form-label">Facial form </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_facial_form[]" value="Square"
+                                <?php if (isset($get->extra_oral_examination_facial_form)) {
+                                    if (in_array('Square', $get->extra_oral_examination_facial_form)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Square
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_facial_form[]" value="Oval"
+                                <?php if (isset($get->extra_oral_examination_facial_form)) {
+                                    if (in_array('Oval', $get->extra_oral_examination_facial_form)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Oval
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_facial_form[]" value="Round"
+                                <?php if (isset($get->extra_oral_examination_facial_form)) {
+                                    if (in_array('Round', $get->extra_oral_examination_facial_form)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Round
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Facial symmetry " class="form-label">Facial symmetry </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_facial_symmetry []" value="Symmetrical"
+                                <?php if (isset($get->extra_oral_examination_facial_symmetry)) {
+                                    if (in_array('Symmetrical', $get->extra_oral_examination_facial_symmetry)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Symmetrical
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_facial_symmetry []" value="Asymmetrical"
+                                <?php if (isset($get->extra_oral_examination_facial_symmetry)) {
+                                    if (in_array('Asymmetrical', $get->extra_oral_examination_facial_symmetry)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Asymmetrical
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Facial divergence" class="form-label">Facial divergence </label><label
+                            class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_facial_divergence[]" value="Straight"
+                                <?php if (isset($get->extra_oral_examination_facial_divergence)) {
+                                    if (in_array('Straight', $get->extra_oral_examination_facial_divergence)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Straight
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_facial_divergence[]" value="Anterior"
+                                <?php if (isset($get->extra_oral_examination_facial_divergence)) {
+                                    if (in_array('Anterior', $get->extra_oral_examination_facial_divergence)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Anterior
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_facial_divergence[]" value="Posterior"
+                                <?php if (isset($get->extra_oral_examination_facial_divergence)) {
+                                    if (in_array('Posterior', $get->extra_oral_examination_facial_divergence)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Posterior
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Profile" class="form-label">Profile </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_profile[]" value="Straight"
+                                <?php if (isset($get->extra_oral_examination_profile)) {
+                                    if (in_array('Straight', $get->extra_oral_examination_profile)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Straight
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_profile[]" value="Prognathic"
+                                <?php if (isset($get->extra_oral_examination_profile)) {
+                                    if (in_array('Prognathic', $get->extra_oral_examination_profile)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Prognathic
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_profile[]" value="Retrognathic"
+                                <?php if (isset($get->extra_oral_examination_profile)) {
+                                    if (in_array('Retrognathic', $get->extra_oral_examination_profile)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Retrognathic
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Lips " class="form-label">Lips </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_lips[]" value="Competent"
+                                <?php if (isset($get->extra_oral_examination_lips)) {
+                                    if (in_array('Competent', $get->extra_oral_examination_lips)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Competent
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_lips[]" value="Incompetent"
+                                <?php if (isset($get->extra_oral_examination_lips)) {
+                                    if (in_array('Incompetent', $get->extra_oral_examination_lips)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Incompetent
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_lips[]" value="Short upper lip"
+                                <?php if (isset($get->extra_oral_examination_lips)) {
+                                    if (in_array('Short upper lip', $get->extra_oral_examination_lips)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Short upper lip
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_lips[]" value="Short lower lip"
+                                <?php if (isset($get->extra_oral_examination_lips)) {
+                                    if (in_array('Short lower lip', $get->extra_oral_examination_lips)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Short lower lip
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_lips[]" value="Everted lip"
+                                <?php if (isset($get->extra_oral_examination_lips)) {
+                                    if (in_array('Everted lip', $get->extra_oral_examination_lips)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Everted lip
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="TMJ " class="form-label">TMJ </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_tmj[]" value="Clicking"
+                                <?php if (isset($get->extra_oral_examination_tmj)) {
+                                    if (in_array('Clicking', $get->extra_oral_examination_tmj)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Clicking
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_tmj[]" value="Dislocation"
+                                <?php if (isset($get->extra_oral_examination_tmj)) {
+                                    if (in_array('Dislocation', $get->extra_oral_examination_tmj)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Dislocation
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_tmj[]" value="Subluxation"
+                                <?php if (isset($get->extra_oral_examination_tmj)) {
+                                    if (in_array('Subluxation', $get->extra_oral_examination_tmj)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Subluxation
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_tmj[]" value="Deviation"
+                                <?php if (isset($get->extra_oral_examination_tmj)) {
+                                    if (in_array('Deviation', $get->extra_oral_examination_tmj)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Deviation
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="extra_oral_examination_tmj[]" value="Abnormalities evident"
+                                <?php if (isset($get->extra_oral_examination_tmj)) {
+                                    if (in_array('Abnormalities evident', $get->extra_oral_examination_tmj)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Abnormalities evident
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Lymph nodes " class="form-label">Lymph nodes </label> <input type="text"
+                            class="form-control-food w-300px" id="extra_oral_examination_lymph_nodes"
+                            name="extra_oral_examination_lymph_nodes" value="<?php if (isset($get->extra_oral_examination_lymph_nodes)) {
+                                echo $get->extra_oral_examination_lymph_nodes;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Others " class="form-label">Others </label> <input type="text"
+                            class="form-control-food w-300px" id="extra_oral_examination_others"
+                            name="extra_oral_examination_others" value="<?php if (isset($get->extra_oral_examination_others)) {
+                                echo $get->extra_oral_examination_others;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Local examination" class="form-label">Local examination </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Oral soft tissues :" class="form-label">Oral soft tissues : </label>
+                        <textarea class="form-control " id="local_examination_oral_soft_tissues" name="local_examination_oral_soft_tissues"><?php if (isset($get->local_examination_oral_soft_tissues)) {
+                            echo $get->local_examination_oral_soft_tissues;
+                        } ?></textarea>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Hard Tissue examination :" class="form-label">Hard Tissue examination : </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Sound tooth : " class="form-label">Sound tooth : </label> <input type="text"
+                            class="form-control-food w-300px " id="hard_tissue_examination_sound_tooth"
+                            name="hard_tissue_examination_sound_tooth" value="<?php if (isset($get->hard_tissue_examination_sound_tooth)) {
+                                echo $get->hard_tissue_examination_sound_tooth;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Missing tooth  :  " class="form-label">Missing tooth : </label> <input type="text"
+                            class="form-control-food w-300px " id="hard_tissue_examination_missing_tooth"
+                            name="hard_tissue_examination_missing_tooth" value="<?php if (isset($get->hard_tissue_examination_missing_tooth)) {
+                                echo $get->hard_tissue_examination_missing_tooth;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Plaque and calculus status:" class="form-label">Plaque and calculus status: </label>
+                        <input type="text" class="form-control-food w-300px " id="hard_tissue_examination_calculus"
+                            name="hard_tissue_examination_calculus" value="<?php if (isset($get->hard_tissue_examination_calculus)) {
+                                echo $get->hard_tissue_examination_calculus;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Restorative and endodontic evaluation" class="form-label">Restorative and endodontic
+                            evaluation </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="1. Caries tooth" class="form-label">1. Caries tooth </label> <input type="text"
+                            class="form-control-food w-300px " id="endodontic_evaluation_caries_tooth"
+                            name="endodontic_evaluation_caries_tooth" value="<?php if (isset($get->endodontic_evaluation_caries_tooth)) {
+                                echo $get->endodontic_evaluation_caries_tooth;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="2. Fractured tooth" class="form-label">2. Fractured tooth </label> <input
+                            type="text" class="form-control-food w-300px " id="endodontic_evaluation_fractured_tooth"
+                            name="endodontic_evaluation_fractured_tooth" value="<?php if (isset($get->endodontic_evaluation_fractured_tooth)) {
+                                echo $get->endodontic_evaluation_fractured_tooth;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="3. Secondary caries " class="form-label">3. Secondary caries </label> <input
+                            type="text" class="form-control-food w-300px " id="endodontic_evaluation_secondary_caries"
+                            name="endodontic_evaluation_secondary_caries" value="<?php if (isset($get->endodontic_evaluation_secondary_caries)) {
+                                echo $get->endodontic_evaluation_secondary_caries;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="4. Tenderness on percusion" class="form-label">4. Tenderness on percusion </label>
+                        <input type="text" class="form-control-food w-300px "
+                            id="endodontic_evaluation_tenderness_on_percusion"
+                            name="endodontic_evaluation_tenderness_on_percusion" value="<?php if (isset($get->endodontic_evaluation_tenderness_on_percusion)) {
+                                echo $get->endodontic_evaluation_tenderness_on_percusion;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="5. Swelling " class="form-label">5. Swelling </label> <input type="text"
+                            class="form-control-food w-300px " id="endodontic_evaluation_swelling"
+                            name="endodontic_evaluation_swelling" value="<?php if (isset($get->endodontic_evaluation_swelling)) {
+                                echo $get->endodontic_evaluation_swelling;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="6. Pulp testing   " class="form-label">6. Pulp testing </label> <input type="text"
+                            class="form-control-food w-300px " id="endodontic_evaluation_pulp_testing"
+                            name="endodontic_evaluation_pulp_testing" value="<?php if (isset($get->endodontic_evaluation_pulp_testing)) {
+                                echo $get->endodontic_evaluation_pulp_testing;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Orthodontic evaluation " class="form-label">Orthodontic evaluation </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="1. Oral habits " class="form-label">1. Oral habits </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_oral_habits[]" value="Yes"
+                                <?php if (isset($get->orthodontic_evaluation_oral_habits)) {
+                                    if (in_array('Yes', $get->orthodontic_evaluation_oral_habits)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Yes
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_oral_habits[]" value="No"
+                                <?php if (isset($get->orthodontic_evaluation_oral_habits)) {
+                                    if (in_array('No', $get->orthodontic_evaluation_oral_habits)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            No
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="A. Tongue thrusting" class="form-label">A. Tongue thrusting </label><label
+                            class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_tongue_thrusting[]" value="Present"
+                                <?php if (isset($get->orthodontic_evaluation_tongue_thrusting)) {
+                                    if (in_array('Present', $get->orthodontic_evaluation_tongue_thrusting)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Present
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_tongue_thrusting[]" value="Absent"
+                                <?php if (isset($get->orthodontic_evaluation_tongue_thrusting)) {
+                                    if (in_array('Absent', $get->orthodontic_evaluation_tongue_thrusting)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Absent
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="B. Thumb / finger sucking" class="form-label">B. Thumb / finger sucking </label><label
+                            class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_finger_sucking[]" value="Present"
+                                <?php if (isset($get->orthodontic_evaluation_finger_sucking)) {
+                                    if (in_array('Present', $get->orthodontic_evaluation_finger_sucking)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Present
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_finger_sucking[]" value="Absent"
+                                <?php if (isset($get->orthodontic_evaluation_finger_sucking)) {
+                                    if (in_array('Absent', $get->orthodontic_evaluation_finger_sucking)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Absent
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="a. Which digit" class="form-label">a. Which digit </label> <input type="text"
+                            class="form-control-food w-300px " id="orthodontic_evaluation_finger_sucking_digit"
+                            name="orthodontic_evaluation_finger_sucking_digit" value="<?php if (isset($get->orthodontic_evaluation_finger_sucking_digit)) {
+                                echo $get->orthodontic_evaluation_finger_sucking_digit;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="b. Age stopped " class="form-label">b. Age stopped </label> <input type="text"
+                            class="form-control-food w-300px " id="orthodontic_evaluation_finger_age_stopped"
+                            name="orthodontic_evaluation_finger_age_stopped" value="<?php if (isset($get->orthodontic_evaluation_finger_age_stopped)) {
+                                echo $get->orthodontic_evaluation_finger_age_stopped;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="C. Mouth breathing " class="form-label">C. Mouth breathing </label><label
+                            class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_mouth_breathing[]" value="Present"
+                                <?php if (isset($get->orthodontic_evaluation_mouth_breathing)) {
+                                    if (in_array('Present', $get->orthodontic_evaluation_mouth_breathing)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Present
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_mouth_breathing[]" value="Absent"
+                                <?php if (isset($get->orthodontic_evaluation_mouth_breathing)) {
+                                    if (in_array('Absent', $get->orthodontic_evaluation_mouth_breathing)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Absent
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="D. Bruxism   " class="form-label">D. Bruxism </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_bruxism[]" value="Present"
+                                <?php if (isset($get->orthodontic_evaluation_bruxism)) {
+                                    if (in_array('Present', $get->orthodontic_evaluation_bruxism)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Present
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_bruxism[]" value="Absent"
+                                <?php if (isset($get->orthodontic_evaluation_bruxism)) {
+                                    if (in_array('Absent', $get->orthodontic_evaluation_bruxism)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Absent
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="E. Nail biting " class="form-label">E. Nail biting </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_nail_biting[]" value="Present"
+                                <?php if (isset($get->orthodontic_evaluation_nail_biting)) {
+                                    if (in_array('Present', $get->orthodontic_evaluation_nail_biting)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Present
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_nail_biting[]" value="Absent"
+                                <?php if (isset($get->orthodontic_evaluation_nail_biting)) {
+                                    if (in_array('Absent', $get->orthodontic_evaluation_nail_biting)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Absent
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="F. Lip biting    " class="form-label">F. Lip biting </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_lip_biting[]" value="Present"
+                                <?php if (isset($get->orthodontic_evaluation_lip_biting)) {
+                                    if (in_array('Present', $get->orthodontic_evaluation_lip_biting)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Present
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_lip_biting[]" value="Absent"
+                                <?php if (isset($get->orthodontic_evaluation_lip_biting)) {
+                                    if (in_array('Absent', $get->orthodontic_evaluation_lip_biting)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Absent
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="G. Cheek biting" class="form-label">G. Cheek biting </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_cheek_biting[]" value="Present"
+                                <?php if (isset($get->orthodontic_evaluation_cheek_biting)) {
+                                    if (in_array('Present', $get->orthodontic_evaluation_cheek_biting)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Present
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_cheek_biting[]" value="Absent"
+                                <?php if (isset($get->orthodontic_evaluation_cheek_biting)) {
+                                    if (in_array('Absent', $get->orthodontic_evaluation_cheek_biting)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Absent
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="H. Others " class="form-label">H. Others </label> <input type="text"
+                            class="form-control-food w-300px " id="orthodontic_evaluation_others"
+                            name="orthodontic_evaluation_others" value="<?php if (isset($get->orthodontic_evaluation_others)) {
+                                echo $get->orthodontic_evaluation_others;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="2. Terminal plane relationship " class="form-label">2. Terminal plane relationship
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="orthodontic_evaluation_terminal_plane_relationship_right[]"
+                                    value="Right" <?php if (isset($get->orthodontic_evaluation_terminal_plane_relationship_right)) {
+                                        if (in_array('Right', $get->orthodontic_evaluation_terminal_plane_relationship_right)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Right
+                            </label> <input type="text" class="form-control-food w-300px"
+                                id="orthodontic_evaluation_terminal_plane_relationship_right_answer"
+                                name="orthodontic_evaluation_terminal_plane_relationship_right_answer"
+                                value="<?php if (isset($get->orthodontic_evaluation_terminal_plane_relationship_right_answer)) {
+                                    echo $get->orthodontic_evaluation_terminal_plane_relationship_right_answer;
+                                } ?>"></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="orthodontic_evaluation_terminal_plane_relationship_left[]"
+                                    value="Left" <?php if (isset($get->orthodontic_evaluation_terminal_plane_relationship_right)) {
+                                        if (in_array('Left', $get->orthodontic_evaluation_terminal_plane_relationship_right)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Left
+                            </label> <input type="text" class="form-control-food w-300px"
+                                id="orthodontic_evaluation_terminal_plane_relationship_left_answer"
+                                name="orthodontic_evaluation_terminal_plane_relationship_left_answer"
+                                value="<?php if (isset($get->orthodontic_evaluation_terminal_plane_relationship_left_answer)) {
+                                    echo $get->orthodontic_evaluation_terminal_plane_relationship_left_answer;
+                                } ?>"></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="3. Molar relationship " class="form-label">3. Molar relationship </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="orthodontic_evaluation_molar_relationship_right[]"
+                                    value="Right" <?php if (isset($get->orthodontic_evaluation_molar_relationship_right)) {
+                                        if (in_array('Right', $get->orthodontic_evaluation_molar_relationship_right)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Right
+                            </label> <input type="text" class="form-control-food w-300px"
+                                id="orthodontic_evaluation_molar_relationship_right_answer"
+                                name="orthodontic_evaluation_molar_relationship_right_answer"
+                                value="<?php if (isset($get->orthodontic_evaluation_molar_relationship_right_answer)) {
+                                    echo $get->orthodontic_evaluation_molar_relationship_right_answer;
+                                } ?>"></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="orthodontic_evaluation_molar_relationship_left[]"
+                                    value="Left" <?php if (isset($get->orthodontic_evaluation_molar_relationship_right)) {
+                                        if (in_array('Left', $get->orthodontic_evaluation_molar_relationship_right)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Left
+                            </label> <input type="text" class="form-control-food w-300px"
+                                id="orthodontic_evaluation_terminal_plane_relationship_left_answer"
+                                name="orthodontic_evaluation_molar_relationship_answer" value="<?php if (isset($get->orthodontic_evaluation_molar_relationship_answer)) {
+                                    echo $get->orthodontic_evaluation_molar_relationship_answer;
+                                } ?>">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="4. Canine relationship " class="form-label">4. Canine relationship </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="orthodontic_evaluation_canine_relationship_right[]"
+                                    value="Right" <?php if (isset($get->orthodontic_evaluation_canine_relationship_right)) {
+                                        if (in_array('Right', $get->orthodontic_evaluation_canine_relationship_right)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Right
+                            </label> <input type="text" class="form-control-food w-300px"
+                                id="orthodontic_evaluation_canine_relationship_right_answer"
+                                name="orthodontic_evaluation_canine_relationship_right_answer"
+                                value="<?php if (isset($get->orthodontic_evaluation_canine_relationship_right_answer)) {
+                                    echo $get->orthodontic_evaluation_canine_relationship_right_answer;
+                                } ?>"></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <div class=" "><label class="checkbox">
+                                <input type="checkbox" name="orthodontic_evaluation_canine_relationship_left[]"
+                                    value="Left" <?php if (isset($get->orthodontic_evaluation_canine_relationship_right)) {
+                                        if (in_array('Left', $get->orthodontic_evaluation_canine_relationship_right)) {
+                                            echo 'checked';
+                                        }
+                                    } ?>>
+                                <span></span>
+                                Left
+                            </label> <input type="text" class="form-control-food w-300px"
+                                id="orthodontic_evaluation_canine_relationship_left_answer"
+                                name="orthodontic_evaluation_canine_relationship_left_answer"
+                                value="<?php if (isset($get->orthodontic_evaluation_canine_relationship_left_answer)) {
+                                    echo $get->orthodontic_evaluation_canine_relationship_left_answer;
+                                } ?>"></div>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="5. Overjet " class="form-label">5. Overjet </label> <input type="text"
+                            class="form-control-food w-300px " id="orthodontic_evaluation_overjet"
+                            name="orthodontic_evaluation_overjet" value="<?php if (isset($get->orthodontic_evaluation_overjet)) {
+                                echo $get->orthodontic_evaluation_overjet;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="6. Overbite " class="form-label">6. Overbite </label> <input type="text"
+                            class="form-control-food w-300px " id="orthodontic_evaluation_overbite"
+                            name="orthodontic_evaluation_overbite" value="<?php if (isset($get->orthodontic_evaluation_overbite)) {
+                                echo $get->orthodontic_evaluation_overbite;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="7. Open bite " class="form-label">7. Open bite </label> <input type="text"
+                            class="form-control-food  " id="orthodontic_evaluation_open_bite"
+                            name="orthodontic_evaluation_open_bite" value="<?php if (isset($get->orthodontic_evaluation_open_bite)) {
+                                echo $get->orthodontic_evaluation_open_bite;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="8. Cross bite " class="form-label">8. Cross bite </label> <input type="text"
+                            class="form-control-food w-300px " id="orthodontic_evaluation_cross_bite"
+                            name="orthodontic_evaluation_cross_bite" value="<?php if (isset($get->orthodontic_evaluation_cross_bite)) {
+                                echo $get->orthodontic_evaluation_cross_bite;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="9. Ectopic eruption" class="form-label">9. Ectopic eruption </label> <input
+                            type="text" class="form-control-food w-300px "
+                            id="orthodontic_evaluation_ectopic_eruption" name="orthodontic_evaluation_ectopic_eruption"
+                            value="<?php if (isset($get->orthodontic_evaluation_ectopic_eruption)) {
+                                echo $get->orthodontic_evaluation_ectopic_eruption;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="10. Supernumerary teeth" class="form-label">10. Supernumerary teeth </label> <input
+                            type="text" class="form-control-food w-300px "
+                            id="orthodontic_evaluation_supernumerary_teeth"
+                            name="orthodontic_evaluation_supernumerary_teeth" value="<?php if (isset($get->orthodontic_evaluation_supernumerary_teeth)) {
+                                echo $get->orthodontic_evaluation_supernumerary_teeth;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="11. Midline " class="form-label">11. Midline </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_midline[]" value="Normal"
+                                <?php if (isset($get->orthodontic_evaluation_midline)) {
+                                    if (in_array('Normal', $get->orthodontic_evaluation_midline)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Normal
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_midline[]" value="Deviated"
+                                <?php if (isset($get->orthodontic_evaluation_midline)) {
+                                    if (in_array('Deviated', $get->orthodontic_evaluation_midline)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Deviated
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="12. Crowding / spacing" class="form-label">12. Crowding / spacing </label> <input
+                            type="text" class="form-control-food w-300px "
+                            id="orthodontic_evaluation_crowding_spacing" name="orthodontic_evaluation_crowding_spacing"
+                            value="<?php if (isset($get->orthodontic_evaluation_crowding_spacing)) {
+                                echo $get->orthodontic_evaluation_crowding_spacing;
+                            } ?>">
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="13. Proclination " class="form-label">13. Proclination </label><label
+                            class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_proclination[]" value="Present"
+                                <?php if (isset($get->orthodontic_evaluation_proclination)) {
+                                    if (in_array('Present', $get->orthodontic_evaluation_proclination)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Present
+                        </label><label class="checkbox">
+                            <input type="checkbox" name="orthodontic_evaluation_proclination[]" value="Absent"
+                                <?php if (isset($get->orthodontic_evaluation_proclination)) {
+                                    if (in_array('Absent', $get->orthodontic_evaluation_proclination)) {
+                                        echo 'checked';
+                                    }
+                                } ?>>
+                            <span></span>
+                            Absent
+                        </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Investigation " class="form-label">Investigation </label>
+                        <textarea class="form-control " id="dental_investigation" name="dental_investigation"><?php if (isset($get->dental_investigation)) {
+                            echo $get->dental_investigation;
+                        } ?></textarea>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Diagnosis " class="form-label">Diagnosis </label>
+                        <textarea class="form-control " id="dental_diagnosis" name="dental_diagnosis"><?php if (isset($get->dental_diagnosis)) {
+                            echo $get->dental_diagnosis;
+                        } ?></textarea>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Treatment plan  " class="form-label">Treatment plan </label>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="1 Systemic phase " class="form-label">1 Systemic phase </label>
+                        <textarea class="form-control " id="treatment_systemic_phase" name="treatment_systemic_phase"><?php if (isset($get->treatment_systemic_phase)) {
+                            echo $get->treatment_systemic_phase;
+                        } ?></textarea>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="2 Preventive phase" class="form-label">2 Preventive phase </label>
+                        <textarea class="form-control " id="treatment_preventive_phase" name="treatment_preventive_phase"><?php if (isset($get->treatment_preventive_phase)) {
+                            echo $get->treatment_preventive_phase;
+                        } ?></textarea>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="3 Preparatory phase" class="form-label">3 Preparatory phase </label>
+                        <textarea class="form-control " id="treatment_preparatory_phase" name="treatment_preparatory_phase"><?php if (isset($get->treatment_preparatory_phase)) {
+                            echo $get->treatment_preparatory_phase;
+                        } ?></textarea>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="4 Corrective phase" class="form-label">4 Corrective phase </label>
+                        <textarea class="form-control " id="treatment_corrective_phase" name="treatment_corrective_phase"><?php if (isset($get->treatment_corrective_phase)) {
+                            echo $get->treatment_corrective_phase;
+                        } ?></textarea>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="5 Maintenance phase" class="form-label">5 Maintenance phase </label>
+                        <textarea class="form-control " id="treatment_maintenance_phase" name="treatment_maintenance_phase"><?php if (isset($get->treatment_maintenance_phase)) {
+                            echo $get->treatment_maintenance_phase;
+                        } ?></textarea>
+                    </div>
+                    <div class="col-12 col-md-7 p-2">
+
+                        <label for="Referral" class="form-label">Referral </label>
+                        <textarea class="form-control " id="treatment_any_referral" name="treatment_any_referral"><?php if (isset($get->treatment_any_referral)) {
+                            echo $get->treatment_any_referral;
+                        } ?></textarea>
+                    </div>
+                    <div class="col-12 col-md-3 pt-md-5">
+                        <div class="d-flex justify-content-start align-items-center gap-4 my-5">
+                            <?php if(isset($getdata->id)) { ?>
+                            <a class="baby-primary-btn mt-3"
+                                href="{{ route('doctor.appointment.patient.prescription.medicine', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'pr_id' => $getdata->id]) }}">+
+                                Add Prescriptions</a>
+                            <?php } else { ?>
+                            <div class="tooltip1">
+
+                                <a class="baby-primary-btn" href="#">+ Add Prescriptions</a>
+                                <span class="tooltip_text">Please update the paediatric case record form</span>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                {{-- table --}}
+                <div class="table-style-one py-3 PX-0 procedure-table">
+                    <div class="table-responsive py-3">
+                        <table class="table ">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col" class="bg-color-v1 text-center">Procedure done</th>
+                                    <th scope="col" class="bg-color-v1 text-center date">Next visit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                           // dd($get); exit;
+                            if(isset($get->procedure)) {
+                            foreach ($get->procedure as $key => $value) {
+                            ?>
+                                <tr>
+                                    <td class="text-start">
+                                        <textarea class="form-control" name="advice[]" id=""><?php if (isset($value->advice)) {
+                                            echo $value->advice;
+                                        } ?></textarea>
+                                    </td>
+                                    <td class="text-center date">
+                                        <div class="d-flex gap-2 align-items-center">
+                                            <input class="form-control" id="deleteRow" type="date" id=""
+                                                name="followUpDays[]" value="<?php if (isset($value->followUpDays)) {
+                                                    echo $value->followUpDays;
+                                                } ?>">
+                                            <div>
+                                                <button type="button" class="action-btn delete-btn">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                        viewBox="0 0 16 16" fill="none">
+                                                        <path
+                                                            d="M2.66675 4.48933H3.91141M3.91141 4.48933H13.8687M3.91141 4.48933V13.202C3.91141 13.5321 4.04255 13.8487 4.27597 14.0821C4.50939 14.3155 4.82598 14.4467 5.15608 14.4467H11.3794C11.7095 14.4467 12.0261 14.3155 12.2595 14.0821C12.4929 13.8487 12.6241 13.5321 12.6241 13.202V4.48933H3.91141ZM5.77841 4.48933V3.24467C5.77841 2.91456 5.90955 2.59797 6.14297 2.36455C6.37639 2.13113 6.69297 2 7.02308 2H9.51241C9.84252 2 10.1591 2.13113 10.3925 2.36455C10.6259 2.59797 10.7571 2.91456 10.7571 3.24467V4.48933M7.02308 7.601V11.335M9.51241 7.601V11.335"
+                                                            stroke="#FF505B" stroke-width="1.11111"
+                                                            stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <?php } } else { ?>
+
+
+                                <tr>
+                                    <td class="text-start">
+                                        <textarea class="form-control" name="advice[]" id=""><?php if (isset($get->advice)) {
+                                            echo $get->advice;
+                                        } ?></textarea>
+                                    </td>
+                                    <td class="text-center date">
+                                        <div class="d-flex gap-2 align-items-center">
+                                            <input class="form-control" type="date" id=""
+                                                name="followUpDays[]" value="<?php if (isset($get->followUpDays)) {
+                                                    echo $get->followUpDays;
+                                                } ?>">
+                                            <div>
+                                                <button type="button" class="action-btn delete-btn">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                        viewBox="0 0 16 16" fill="none">
+                                                        <path
+                                                            d="M2.66675 4.48933H3.91141M3.91141 4.48933H13.8687M3.91141 4.48933V13.202C3.91141 13.5321 4.04255 13.8487 4.27597 14.0821C4.50939 14.3155 4.82598 14.4467 5.15608 14.4467H11.3794C11.7095 14.4467 12.0261 14.3155 12.2595 14.0821C12.4929 13.8487 12.6241 13.5321 12.6241 13.202V4.48933H3.91141ZM5.77841 4.48933V3.24467C5.77841 2.91456 5.90955 2.59797 6.14297 2.36455C6.37639 2.13113 6.69297 2 7.02308 2H9.51241C9.84252 2 10.1591 2.13113 10.3925 2.36455C10.6259 2.59797 10.7571 2.91456 10.7571 3.24467V4.48933M7.02308 7.601V11.335M9.51241 7.601V11.335"
+                                                            stroke="#FF505B" stroke-width="1.11111"
+                                                            stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php }?>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-end">
+                            <!-- <button id="addNewButton" class="baby-primary-btn">Add New</button> -->
+                            <button type="button" id="addNewButton" class="baby-primary-btn">Add New</button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-start align-items-center gap-4 mb-5">
+
+                    <a type="button" href="http://babyama.test/doctor/appointments"
+                        class="baby-secondary-btn border-1 text-center" data-bs-dismiss="modal">Cancel</a>
+
+                    <button type="submit" class="baby-primary-btn">Save</button>
+
+                </div>
+
+            </form>
+        </section>
+    @endsection

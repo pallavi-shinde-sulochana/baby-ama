@@ -1,0 +1,86 @@
+#timeline {
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#timeline div {
+    height: 180px;
+}
+
+#timeline div .date {
+    text-align: right
+}
+
+#timeline div .date:before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: #e5e5d1;
+    position: absolute;
+	left: 97.8%;
+    top: 84px;
+    border-radius: 100%;
+    cursor: pointer
+}
+
+#timeline div.active .date::before {
+    content: '';
+	width: 30px;
+    height: 30px;
+    background: #fde1de;
+    position: absolute;
+    left: 96.5%;
+    border: 1px solid #ee3b2d;
+    top: 90px;
+    border-radius: 100%
+}
+
+#timeline div .date h2 {
+	margin: 80px 28px 0;
+    font-size: 26px;
+    cursor: pointer;
+    color: #686868;
+    font-family: RidleyGrotesk-Regular,sans-serif;
+}
+
+#timeline div.active .date h2 {
+    font-size: 44px;
+	color: var(--color-primary);
+    font-family: RidleyGrotesk-Bold,sans-serif;
+    font-weight: bold;
+}
+
+#timeline div .text p {
+    margin: 94px 0px 0 30px;
+    display: none
+}
+
+
+#timeline div.active .text p {
+    display: inherit;
+	color: #4e4e4e;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 767px) {
+    .milestone_sec {
+    max-height: 100vh;
+    }
+    #timeline div.active .date h2 {
+        font-size: 34px; margin: 85px 28px 0;
+    }
+    #timeline div.active .text p {
+    font-size: 14px;    margin: 70px 0px 0 20px;
+    }
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .milestone_sec {
+        max-height: 55vh;
+    }
+}
+@media screen and (min-width: 1600px) {
+	#timeline div {
+        height: 250px;
+    }
+}
