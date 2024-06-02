@@ -198,6 +198,26 @@ if (!function_exists('ageCalculator')) {
     }
 }
 
+// if (!function_exists('ageCalculator')) {
+//     function ageCalculator($dob)
+//     {
+//         if (!empty($dob)) {
+//             $birthdate = new DateTime($dob);
+//             $today = new DateTime('today');
+//             $ageInYears = $birthdate->diff($today)->y;
+
+//             if ($ageInYears > 0) {
+//                 return $ageInYears;
+//             } else {
+//                 $ageInMonths = $birthdate->diff($today)->m;
+//                 return $ageInMonths . ' Months';
+//             }
+//         } else {
+//             return '0 Years';
+//         }
+//     }
+// }
+
 if (!function_exists('getDoctorSpecialistType')) {
     function getDoctorSpecialistType()
     {
