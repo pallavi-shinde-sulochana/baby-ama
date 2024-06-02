@@ -163,9 +163,9 @@ $get = isset($getdata->women_wellness) ? json_decode($getdata->women_wellness) :
                 <a type="button" href="{{ route('doctor.appointments') }}"
                     class="baby-secondary-btn border-1 text-center" data-bs-dismiss="modal">Cancel</a>
 
-                    <?php if ($app_status=='assigned') { ?>
+                    {{-- <?php if ($app_status=='assigned') { ?> --}}
                         <button type="submit" class="baby-primary-btn">Save</button>
-                        <?php } ?>
+                        {{-- <?php } ?> --}}
             </div>
 
         </form>

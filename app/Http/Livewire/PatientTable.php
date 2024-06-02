@@ -118,10 +118,11 @@ final class PatientTable extends PowerGridComponent
             ->addColumn('d_o_b',function(Patient $model){
                 $formattedDate = Carbon::parse($model->d_o_b)->format('d/m/Y');
                 $age = ageCalculator($model->d_o_b);
-                // $html = $model->d_o_b.', '.$age.' Years';
-                $model->formatted_dob = $formattedDate . ' (' . $age . ' Years)';
-                return $model->formatted_dob;
-                // return $html;
+               //  $html = $model->d_o_b.', '.$age.' Years';
+                 $html = $model->d_o_b.', '.'('.$model->age.')';
+               //$model->formatted_dob = $formattedDate . ' (' . $age . ' Years)';
+               // return $model->formatted_dob;
+                return $html;
             })
             // ->addColumn('d_o_b')
             ->addColumn('father_name')

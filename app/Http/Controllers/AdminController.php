@@ -166,20 +166,9 @@ class AdminController extends Controller
                 // 'last_name' => 'required',
                 'email' => 'required|email|unique:users,email,'.$request->id,
                 'phone' => 'required|numeric|digits:10|unique:user_infos,phone,'.$user_info->id,
-                // 'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
        // $data = isset($request->id) ? User::find($request->id) : new User;
-
-                    if ($request->hasFile('avatar')) {
-                        $avatar = $request->file('avatar');
-                        $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-                        $avatarPath = $avatar->storeAs('avatars', $avatarName, 'public');
-
-                        // Save avatar path in user_info
-                         \Log::info('Avatar Path: ' . $avatarPath);
-                        $user_info->avatar = $avatarPath;
-                    }
 
         $this->saveUser($user,$user_info,$request);
 
@@ -232,7 +221,7 @@ class AdminController extends Controller
         return view('pages.admin.patient.list',compact('data'));
 
     }
-
+ 
     public function createPatients(Patient $patient){
 
         $data = isset($patient->id) ? $patient : new Patient;
@@ -494,6 +483,7 @@ class AdminController extends Controller
         $appointment->last_name          = $patient->last_name;
         $appointment->specialists        = $request->specialists;
         $appointment->appoinment_date    = $request->appoinment_date;
+        $appointment->appoinment_time    = $request->appoinment_time;
         $appointment->appoinment_session = $request->appoinment_session;
         $appointment->description        = $request->description;
         $appointment->status             = 'awaiting';
