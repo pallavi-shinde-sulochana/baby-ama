@@ -119,12 +119,12 @@ final class PatientTable extends PowerGridComponent
                 $formattedDate = Carbon::parse($model->d_o_b)->format('d/m/Y');
                 $age = ageCalculator($model->d_o_b);
                //  $html = $model->d_o_b.', '.$age.' Years';
-                 $html = $model->d_o_b.', '.'('.$model->age.')';
-               //$model->formatted_dob = $formattedDate . ' (' . $age . ' Years)';
-               // return $model->formatted_dob;
-                return $html;
+               //  $html = $model->d_o_b.', '.'('.$model->age.')';
+                $model->formatted_dob = $formattedDate;
+                return $model->formatted_dob;
+               // return $html;
             })
-            // ->addColumn('d_o_b')
+           // ->addColumn('age')
             ->addColumn('father_name')
             ->addColumn('mother_name')
             // ->addColumn('parents',function(Patient $model){
@@ -229,10 +229,15 @@ final class PatientTable extends PowerGridComponent
         $column []= Column::add()
                 ->title('DOB')
                 ->field('d_o_b')
-                ->searchable('umr_no')
+                ->searchable('d_o_b')
                 // ->makeInputText()
                 ->sortable();
                 // ->makeInputDatePicker('d_o_b');
+
+        $column []= Column::add()
+                ->title('Age')
+                ->field('age')       
+                ->searchable('age');
 
         $column []= Column::add()
                 ->title('Father')
