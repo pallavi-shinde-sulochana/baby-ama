@@ -568,7 +568,7 @@ $id = $appointment->id;
                             <h3 class="">Drug and Prescription</h3>
                             <div class="table-responsive py-3">
                                 <table class="table">
-                                    <thead class="table-light bg-color-v1">
+                                    <thead class="table-light bg-color-v1">add-new-prescription-btn
                                         <tr>
                                             <th scope="col" class="text-center">S.No</th>
                                             <th scope="col" class="bg-color-v1 text-center">MEDICINE</th>
