@@ -9,7 +9,7 @@
                 				<div class="col-md-12">
 
                 				@if(isset($data->id))
-                        		<a href="{{route('doctor.users.delete.doctor',$data->id)}}" onclick="return confirm('Are you sure you want to delete this user?');" class="btn btn-sm w-50 btn-danger mb-5 float-end">DELETE USER</a>
+                        		<a href="{{route('doctor.users.delete.doctor',$data->id)}}" onclick="return confirm('Are you sure you want to delete this user?');" class="btn btn-sm btn-danger mb-5 float-end">DELETE USER</a>
                         		@endif
                 				</div>
                 			</div>
