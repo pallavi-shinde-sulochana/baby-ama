@@ -132,6 +132,7 @@
             <div class="col-md-3">
                 <p for="first_name" class=" font-weight-normal">
                     Consultant Fee - <b> {{$appointment->consultant_fee}}</b>
+                   
                 </p>
             </div>
             <div class="col-md-6">
