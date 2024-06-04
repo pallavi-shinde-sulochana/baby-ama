@@ -340,6 +340,8 @@ class DoctorController extends Controller
     }
 
 
+
+
     public function GetPatientPediatricForm(Request $request, Appoinment $appoinment, Patient $patient){
 
         $user    = $patient->user;
@@ -348,11 +350,16 @@ class DoctorController extends Controller
         ->where('appointment_id',$appoinment->id)
         ->orderBy('id', 'DESC')->first();
 
+
         $get_ap_status= Appoinment::where('id',$appoinment->id)->first();
         $app_status = $get_ap_status->status;
 
+        $type  = 'pediatric';
+        $pr_id = $getdata->id;
+        $pres = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$pr_id])->get();
 
-         return view('pages.doctor.patient.pediatric', compact('user','patient','getdata','appoinment','app_status'));
+
+         return view('pages.doctor.patient.pediatric', compact('pres','user','patient','getdata','appoinment','app_status'));
     }
 
     public function PostPatientPediatricForm(Request $request, Patient $patient){

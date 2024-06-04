@@ -22,18 +22,23 @@
 		        				</div>
                                 
 								<div class="row p-2">
+									@if(!empty($appointment->first_name))
                                     <div class="col-md-4">
 										<p for="first_name" class=" font-weight-normal">
 											Name - <b> {{$appointment->first_name}}</b>
 										</p>
 									</div>
+									@endif
 
+									@if(!empty($appointment->specialists))
 									<div class="col-md-4">
 										<p for="first_name" class=" font-weight-normal">
 											Need to see - <b> {{ucfirst($appointment->specialists)}}</b>
 										</p>
 									</div>
+									@endif
 
+									@if(!empty($appointment->phone))
 									<div class="col-md-4">
 										<p for="first_name" class=" font-weight-normal">
 											Phone - <b> {{$appointment->phone}}</b>
@@ -42,24 +47,31 @@
 											Appointment Time - <b> {{$appointment->appoinment_time}}</b> 
 										</p>  --}}
 									</div>
+									@endif
 
+                                    @if(!empty($appointment->appoinment_date))
 									<div class="col-md-4">
 										<p for="first_name" class=" font-weight-normal">
 											Appoinment Date & Session - <b> {{$appointment->appoinment_date}} / {{ucfirst($appointment->appoinment_session)}}</b> 
 										</p>
 									</div>
+									@endif
 
-                                    <div class="col-md-4">
+                                    @if(!empty($appointment->appoinment_time))
+									<div class="col-md-4">
 									<p for="first_name" class=" font-weight-normal">
 										Appointment Time - <b> {{$appointment->appoinment_time}}</b> 
 									</p>
 									</div>
-									
+									@endif
+
+									@if(!empty($appointment->description))
 									<div class="col-md-4">
 										<p for="first_name" class=" font-weight-normal">
 											Description - <b> {{$appointment->description}}</b>
 										</p>
 									</div>
+									@endif
 
 								</div>
 
@@ -81,57 +93,83 @@
 		        				 @php
 		        				 	$patient = $appointment->user->patient;
 		        				 @endphp
+
+                                @if(!empty($patient->first_name))
 		                	 	<div class="col-md-4">
 		                	 		<p for="first_name" class=" font-weight-normal">
 		                	 			First Name - <b> {{$patient->first_name}}</b>
 		                	 		</p>
 		                	 	</div>
+								@endif
+
+								@if(!empty($patient->last_name))
 		                	 	<div class="col-md-4">
-		                	 		<p for="first_name" class=" font-weight-normal">
+		                	 		<p for="last_name" class=" font-weight-normal">
 		                	 			Last Name - <b> {{$patient->last_name}}</b>
 		                	 		</p>
-		                	 			 
 		                	 	</div>
+								@endif
+
+								@if(!empty($patient->umr_no))
 		                	 	<div class="col-md-4">
-		                	 		<p for="first_name" class=" font-weight-normal">
+		                	 		<p for="umr_no" class=" font-weight-normal">
 		                	 			UMR NO  - <b> {{$patient->umr_no}}</b> 
 		                	 		</p>
-		                	 		<p for="first_name" class=" font-weight-normal">
+		                	 	</div>
+								@endif
+
+								@if(!empty($patient->op_no))
+		                	 	<div class="col-md-4">
+		                	 		<p for="op_no" class=" font-weight-normal">
 		                	 			OP NO -  <b> {{$patient->op_no}}</b>
 		                	 		</p>
-		                	 			 
 		                	 	</div>
-		                	 	<div class="col-md-4">
-		                	 		<p for="first_name" class=" font-weight-normal">
+								@endif
+
+								@if(!empty($patient->father_name))
+								<div class="col-md-4">
+		                	 		<p for="father_name" class=" font-weight-normal">
 		                	 			Father name - <b> {{$patient->father_name}}</b>
 		                	 			<br>
 		                	 			Occupation - <b>{{$patient->father_occupation}}</b>
 		                	 		</p>
 		                	 	</div>
+								@endif
+
+                                @if(!empty($patient->mother_name))
 		                	 	<div class="col-md-4">
-		                	 		<p for="first_name" class=" font-weight-normal">
+		                	 		<p for="mother_name" class=" font-weight-normal">
 		                	 			Mother Name - <b> {{$patient->mother_name}}</b>
 		                	 			<br>
 		                	 			Occupation - <b>{{$patient->mother_occupation}}</b>
 		                	 		</p>
 		                	 	</div>
+								@endif
+
+								@if(!empty($patient->gender))
 		                	 	<div class="col-md-4">
 		                	 		<p for="first_name" class=" font-weight-normal">
 		                	 			Gender / Age - <b> {{ucfirst($patient->gender)}} / {{$patient->age}}</b>
 		                	 			<br>
-		                	 			
 		                	 		</p>
 		                	 	</div>
+								@endif
+
+								@if(!empty($patient->d_o_b))
 		                	 	<div class="col-md-4">
-		                	 		<p for="first_name" class=" font-weight-normal">
+		                	 		<p for="d_o_b" class=" font-weight-normal">
 		                	 			D O B - <b>{{$patient->d_o_b}}</b>
 		                	 		</p>
 		                	 	</div>
+                                @endif
+
+								@if(!empty($patient->blood_group))
 		                	 	<div class="col-md-4">
-		                	 		<p for="first_name" class=" font-weight-normal">
+		                	 		<p for="blood_group" class=" font-weight-normal">
 		                	 			Blood Group - <b>{{$patient->blood_group}}</b>
 		                	 		</p>
 		                	 	</div>
+								@endif
 		                	 	{{-- <div class="col-md-12 text-center">
 		                	 		 <a  target="_blank" href="{{route('admin.patients.update',$patient->id)}}" class="btn btn-info btn-sm">Edit Patient Detail</a>
 		                	 	</div> --}}

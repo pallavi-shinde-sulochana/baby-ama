@@ -94,7 +94,7 @@
                             @endphp
                                 <tr>
                                     <th scope="row" class="text-center">{{ $i }}</th>
-                                    <td class="text-center">{{ $list_med->name }}</td>
+                                    <td class="text-center">{{ $list_med ? $list_med->name : ' ' }}</td>
                                     <td class="text-center">{{$val->intake_qty.' '.$val->dosage}}</td>
                                     <td class="text-center">{{$val->timing_when}}</td>
                                     <td class="text-center">{{$val->timing_how}}</td>
