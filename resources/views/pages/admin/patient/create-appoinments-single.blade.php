@@ -1,12 +1,41 @@
 <x-base-layout>
-	
-@php 
+
+@php
 
  $data = $appointment;
 @endphp
+<style>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    .patient-info {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .patient-info p {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .patient-info p span:first-child {
+        flex: 0 0 40%;
+        text-align: left;
+    }
+
+    .patient-info p span:last-child {
+        flex: 0 0 50%;
+        text-align: left;
+    }
+
+    .patient-info p span.separator {
+    flex: 0 0 auto;
+    text-align: center;
+    width: 10px; /* Adjust width as needed */
+    }
+</style>
 	<section >
     	<div class="container">
-    		
+
         	<div class="row ">
         		<div class="col-md-12 row">
         			<div class="card border shadow-sm p-3 mb-5 bg-body rounded">
@@ -16,31 +45,72 @@
 		        					<h3>Creating Appoinment For -  {{$patient->first_name.' '.$patient->last_name}}</h3>
 
 		        				</div>
-		        				<div class="col-md-3">
-		                	 		<p for="first_name" class=" font-weight-normal">
-		                	 			Father Name - <b> {{$patient->father_name}}</b><br>
-		                	 			Mother Name - <b> {{$patient->moher_name}}</b>
-		                	 		</p>
-		                	 	</div>
-		                	 	<div class="col-md-3">
-		                	 		<p for="first_name" class=" font-weight-normal">
-		                	 			Address - <b> {{$patient->address}}</b>
-		                	 		</p>
-		                	 	</div>
-		        				<div class="col-md-3">
-		                	 		<p for="first_name" class=" font-weight-normal">
-		                	 			Primary Contact - <b> {{$patient->father_phone}}</b><br>
-		                	 			Secondary Contact - <b> {{$patient->mother_phone}}</b>
-		                	 		</p>
-		                	 	</div>
-		                	 	<div class="col-md-3">
-		                	 		<p for="first_name" class=" font-weight-normal">
-		                	 			Gender - <b> {{$patient->gender}}</b><br>
-		                	 			Age- <b> {{$patient->age}}</b>
-		                	 		</p>
-		                	 	</div>
+                                     @if($patient->father_name || $patient->mother_name || $patient->address || $patient->father_phone ||
+                                    $patient->mother_phone || $patient->gender || $patient->age)
+                                    <div class="col-md-4">
+                                        <div class="patient-info">
+                                            @if($patient->father_name)
+                                            <p>
+                                                <span><b>Father Name</b></span>
+                                                <span class="separator">:</span>
+                                                <span>{{$patient->father_name}}</span>
+                                            </p>
+                                            @endif
+                                            @if($patient->mother_name)
+                                            <p>
+                                                <span><b>Mother Name</b></span>
+                                                <span class="separator">:</span>
+                                                <span>{{$patient->mother_name}}</span>
+                                            </p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="patient-info">
+                                            @if($patient->address)
+                                            <p>
+                                                <span><b>Address</b></span>
+                                                <span class="separator">:</span>
+                                                <span>{{$patient->address}}</span>
+                                            </p>
+                                            @endif
+                                            @if($patient->father_phone)
+                                            <p>
+                                                <span><b>Primary Contact</b></span>
+                                                <span class="separator">:</span>
+                                                <span>{{$patient->father_phone}}</span>
+                                            </p>
+                                            @endif
+                                            @if($patient->mother_phone)
+                                            <p>
+                                                <span><b>Secondary Contact</b></span>
+                                                <span class="separator">:</span>
+                                                <span>{{$patient->mother_phone}}</span>
+                                            </p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="patient-info">
+                                            @if($patient->gender)
+                                            <p>
+                                                <span><b>Gender</b></span>
+                                                <span class="separator">:</span>
+                                                <span>{{$patient->gender}}</span>
+                                            </p>
+                                            @endif
+                                            @if($patient->age)
+                                            <p>
+                                                <span><b>Age</b></span>
+                                                <span class="separator">:</span>
+                                                <span>{{$patient->age}}</span>
+                                            </p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    @endif
 		        			</div>
-		        			 
+
 			               <form class="row g-3" action="{{route('admin.patient.create.store.appointment',$patient->id)}}"  method="POST">
 		                	<div class="row">
 	                    			@csrf
@@ -48,7 +118,7 @@
 	                    		<div class="col-md-6">
                         	 		<label for="first_name" class="form-label">Appoinment Date <span class="text-danger">*</span></label>
                         	 		<input type="text"  class="form-control datePicker" id="kt_date" name="appoinment_date" placeholder="Date of the appoinment"  value="{{isset($data->appoinment_date) ? $data->appoinment_date : old('appoinment_date')}}" >
-                        	 		
+
 		                            @if($errors->has('appoinment_date'))
 		                                <span class="text-danger">{{ $errors->first('appoinment_date') }}</span>
 		                            @endif
@@ -66,25 +136,25 @@
 		                		<div class="col-md-6">
 		                			<label for="first_name" class="form-label">Specialists </label>
                         	 		<input type="text"  class="form-control " id="kt_date" name="specialists" placeholder="Which Specialists to you wants to meet"  value="{{isset($data->specialists) ? $data->specialists : old('specialists')}}" >
-                        	 		
+
 		                            @if($errors->has('specialists'))
 		                                <span class="text-danger">{{ $errors->first('specialists') }}</span>
 		                            @endif
 
-                        	 		
+
                         	 	</div>
                         	 	<div class="col-md-6">
                         	 		<label for="first_name" class="form-label">Select Doctor <span class="text-danger">*</span></label>
                         	 		<select class="form-select" name="assign_doctor" id="assign_doctor" required>
 		                				<option value="">Choose Doctor</option>
-		                				
+
 		                			 @foreach($doctors as $key => $value)
 		                			 @php
 		                			  $sellected = ($value->id==$appointment->doctor_id) ? 'selected' : '';
                                         $name = $value->first_name .$value->last_name;
                                         $specialist='';
                                          // echo json_encode($value->info->specialist_type);
-                                        
+
 
                                         if($value->info->specialist_type){
 
@@ -122,8 +192,8 @@
 								</div>
 		                	</div>
 
-	                    		
-		                	
+
+
 		                	<div class="row p-5">
 		                		{{-- <div class="col-md-12 text-center">
 		                			<a  class="btn btn-secondary" href="{{route('admin.patients.get.appointment',$data->id)}}">Back</a>
@@ -137,15 +207,15 @@
 		                	</form>
 		            </div>
         		</div>
-			    
+
         	</div>
         </div>
     </section>
    <div class="p-6 bg-white border-b border-gray-200">
-                    
+
 	 {{-- <livewire:appoinment-table/> --}}
     </div>
 
 
-    
+
 </x-base-layout>

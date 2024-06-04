@@ -1,3 +1,4 @@
+
 @php
     $toolbarButtonMarginClass = "ms-1 ms-lg-3";
     $toolbarButtonHeightClass = "w-40px h-40px";
@@ -7,7 +8,7 @@
 
 {{--begin::Toolbar wrapper--}}
 <div class="d-flex align-items-stretch flex-shrink-0">
-    
+
 
     {{--begin::Quick links--}}
     <div class="d-flex align-items-center {{ $toolbarButtonMarginClass }}">

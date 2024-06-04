@@ -85,33 +85,46 @@ final class PatientTable extends PowerGridComponent
     | Make Datasource fields available to be used as columns.
     | You can pass a closure to transform/modify the data.
     |
-    */ 
+    */
     public function addColumns(): ?PowerGridEloquent
     {
         return PowerGrid::eloquent()
             // ->addColumn('id')
             // ->addColumn('first_name')
-            ->addColumn('edit',function(Patient $model){
-                $html='';
-                $html .= '<a href="'.route('admin.patients.update', ['patient' => $model->id]).'"><i class="fa fa-edit fa-2x"></i></a> &emsp;';
-                $html .= "<a href='#'><i class='fa fa-trash text-danger fa-2x'></i></a>&emsp;";
-                $html .= '<a href="'.route('admin.patient.create.appointment', ['patient' => $model->id]).'"><i class="fa fa-plus fa-2x"></i></a>';
-                 
-                return $html;
-            })
+          ->addColumn('edit', function(Patient $model) {
+                    $html = '';
+                    $html .= '<a href="'.route('admin.patients.update', ['patient' => $model->id]).'"><i class="fa fa-edit fa-2x"></i></a> &emsp;';
+                    $html .= '<a href="#" onclick="event.preventDefault(); if(confirm(\'Are you sure?\')) { document.getElementById(\'delete-patient-'.$model->id.'\').submit(); }"><i class="fa fa-trash text-danger fa-2x"></i></a>&emsp;';
+                    $html .= '<a href="'.route('admin.patient.create.appointment', ['patient' => $model->id]).'"><i class="fa fa-plus fa-2x"></i></a>';
+                    $html .= '<form id="delete-patient-'.$model->id.'" action="'.route('admin.patients.destroy', ['patient' => $model->id]).'" method="POST" style="display: none;">';
+                    $html .= csrf_field();
+                    $html .= method_field('DELETE');
+                    $html .= '</form>';
+
+                    return $html;
+                })
+
+            // ->addColumn('edit',function(Patient $model){
+            //     $html='';
+            //     $html .= '<a href="'.route('admin.patients.update', ['patient' => $model->id]).'"><i class="fa fa-edit fa-2x"></i></a> &emsp;';
+            //     $html .= "<a href='#'><i class='fa fa-trash text-danger fa-2x'></i></a>&emsp;";
+            //     $html .= '<a href="'.route('admin.patient.create.appointment', ['patient' => $model->id]).'"><i class="fa fa-plus fa-2x"></i></a>';
+
+            //     return $html;
+            // })
             ->addColumn('serial', function () {
                     // Use the serialNumber property and then increment it for the next row
                     $serial = ($this->perPage * ($this->currentPage -1)) + $this->serialNumber;
                     $this->serialNumber++;
-                    
-                    return $serial;               
+
+                    return $serial;
             })
             ->addColumn('first_name',function(Patient $model){
-                 
+
                 $html = '<a href='.route('admin.patients.update',$model->id).'>'.$model->first_name.' '.$model->last_name.'</a>';
-                 
+
                 return $html;
-                
+
             })
             // ->addColumn('last_name')
             ->addColumn('umr_no')
@@ -128,32 +141,32 @@ final class PatientTable extends PowerGridComponent
             ->addColumn('father_name')
             ->addColumn('mother_name')
             // ->addColumn('parents',function(Patient $model){
-                 
+
             //     $html = $model->father_name.' / '.$model->mother_name;
-                 
+
             //     return $html;
             // })
             ->addColumn('address',function(Patient $model){
-                 
+
                 return substr($model->address, 0, 20);
-                 
+
             })
             // ->addColumn('address')
             // substr($string, 0, $size);
             // ->addColumn('mobile',function(Patient $model){
-                 
+
             //     $html = $model->father_phone.' / '.$model->mother_phone;
-                 
+
             //     return $html;
             // });
 
             ->addColumn('father_phone')
             ->addColumn('mother_phone');
             // ->addColumn('d_o_b')
-            // ->addColumn('created_at_formatted', function(Patient $model) { 
+            // ->addColumn('created_at_formatted', function(Patient $model) {
             //     return Carbon::parse($model->created_at)->format('d/m/Y H:i:s');
             // })
-            // ->addColumn('updated_at_formatted', function(Patient $model) { 
+            // ->addColumn('updated_at_formatted', function(Patient $model) {
             //     return Carbon::parse($model->updated_at)->format('d/m/Y H:i:s');
             // });
     }
@@ -212,7 +225,7 @@ final class PatientTable extends PowerGridComponent
         $column []= Column::add()
                 ->title('Baby Name')
                 ->field('first_name')
-                ->searchable('first_name')  
+                ->searchable('first_name')
                 // ->makeInputText()
                 ->sortable();
         // $column []= Column::add()
@@ -236,17 +249,17 @@ final class PatientTable extends PowerGridComponent
 
         $column []= Column::add()
                 ->title('Age')
-                ->field('age')       
+                ->field('age')
                 ->searchable('age');
 
         $column []= Column::add()
                 ->title('Father')
-                ->field('father_name')       
+                ->field('father_name')
                 ->searchable('father_name');
 
         $column []= Column::add()
                 ->title('Mother')
-                ->field('mother_name')       
+                ->field('mother_name')
                 ->searchable('mother_name');
 
         // $column []= Column::add()
@@ -314,7 +327,7 @@ final class PatientTable extends PowerGridComponent
           /*  Button::add('edit')
                 ->caption('Edit')
                 ->class('btn btn-sm btn-success')
-                ->route('admin.patients.update', ['patient' => 'id']), 
+                ->route('admin.patients.update', ['patient' => 'id']),
 
             Button::add('destroy')
                 ->caption('Delete')
@@ -331,7 +344,7 @@ final class PatientTable extends PowerGridComponent
                 ->route('admin.patient.create.appointment', ['patient' => 'id']),*/
         ];
     }
-     
+
 
     /*
     |--------------------------------------------------------------------------
@@ -351,7 +364,7 @@ final class PatientTable extends PowerGridComponent
     public function actionRules(): array
     {
        return [
-           
+
            //Hide button edit for ID 1
             Rule::button('edit')
                 ->when(fn($patient) => $patient->id === 1)

@@ -18,6 +18,7 @@ class CreateInvestigationReports extends Migration
             $table->integer('patient_id')->default(0);
             $table->integer('doctor_id')->default(0);
             $table->text('report_name')->nullable();
+            $table->string('report_type')->nullable();
             $table->text('report_date')->nullable();
             $table->text('report_path')->nullable();
             $table->timestamps();

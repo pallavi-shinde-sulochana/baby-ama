@@ -210,6 +210,22 @@ class AdminController extends Controller
         return view('pages.admin.user.pharmacy.form',compact('data'));
     }
 
+    // app/Http/Controllers/PatientController.php
+
+  public function destroyPatients(Patient $patient)
+    {
+        $patient->delete();
+        return redirect()->route('admin.patients.list')->with('success', 'Patient deleted successfully');
+    }
+
+    public function restorePatients($id)
+    {
+        $patient = Patient::withTrashed()->findOrFail($id);
+        $patient->restore();
+        return redirect()->route('admin.patients.list')->with('success', 'Patient restored successfully');
+    }
+
+
     /*Patients Related Routes*/
     public function listPatients(){
 
@@ -221,7 +237,7 @@ class AdminController extends Controller
         return view('pages.admin.patient.list',compact('data'));
 
     }
- 
+
     public function createPatients(Patient $patient){
 
         $data = isset($patient->id) ? $patient : new Patient;

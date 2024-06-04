@@ -8,7 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\TherapistController;
- 
+
 
 
 Route::prefix('admin')->middleware(['auth','role:super-admin|admin|pharmacy|therapist'])->group(function () {
@@ -48,7 +48,7 @@ Route::prefix('admin')->middleware(['auth','role:super-admin|admin|pharmacy|ther
 	Route::get('/users/delete/therapist/{therapist}', [TherapistController::class, 'deleteTherapist'])->name('therapist.users.delete.therapist');
 	Route::post('/users/save/therapist', [TherapistController::class, 'storeTherapist'])->name('therapist.users.post.therapist');
 	Route::get('/users/list/therapist', [TherapistController::class, 'listTherapist'])->name('therapist.users.list.therapist');
- 
+
 	// Patients related
 	Route::get('/patients', [AdminController::class, 'listPatients'])->name('admin.patients.list');
 
@@ -61,8 +61,15 @@ Route::prefix('admin')->middleware(['auth','role:super-admin|admin|pharmacy|ther
 	Route::get('/appointments', [AdminController::class, 'getAllAppoinments'])->name('admin.patients.appointments');
 
 	Route::get('/patient/{patient}/create/appointment', [AdminController::class, 'addPatientAppoinments'])->name('admin.patient.create.appointment');
-	
+
 	Route::post('/patient/{patient}/create/appointment', [AdminController::class, 'addStorePatientAppoinments'])->name('admin.patient.create.store.appointment');
+
+    // routes/web.php
+
+    Route::delete('patients/{patient}', [AdminController::class, 'destroyPatients'])->name('admin.patients.destroy');
+    Route::post('patients/{patient}/restore', [AdminController::class, 'restorePatients'])->name('admin.patients.restore');
+
+
 
 	Route::get('/appointments/{appointment}', [AdminController::class, 'getAppoinment'])->name('admin.patients.get.appointment');
 

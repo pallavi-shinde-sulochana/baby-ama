@@ -35,7 +35,7 @@
 
         <!--begin:Item-->
         <div class="col-12">
-            <a href="{{route('admin.users.list','patients')}}" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end">
+            <a href="{{route('admin.patients.list','patients')}}" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end">
                 {!! theme()->getSvgIcon("icons/duotone/Shopping/Box2.svg", "svg-icon-3x svg-icon-success mb-2") !!}
                 <span class="fs-5 fw-bold text-gray-800 mb-0">Patients</span>
                 {{-- <span class="fs-7 text-gray-400">View All Customers</span> --}}

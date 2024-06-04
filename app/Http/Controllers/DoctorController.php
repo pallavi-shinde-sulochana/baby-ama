@@ -2,35 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Models\Patient;
-use App\Models\User;
-use App\Models\UserInfo;
-use App\Models\Appoinment;
-use Carbon\Carbon;
-use App\Traits\SMSTrait;
-use App\Models\Medicine;
-use App\Models\Prescription;
-use App\Models\PrescriptionMedicine;
-use App\Models\PediatricForm;
-use App\Models\PatientPediatricForm;
-use App\Models\PatientVaccinationForm;
-use App\Models\PatientDentalForm;
-use App\Models\InvestigationReports;
-use App\Models\ClinicalNotes;
-use App\Models\AnthropometryGrowthCharts;
-use App\Models\WomenWellness;
-use App\Models\Physiotherapy;
-use App\Models\Gynaecology;
-use Illuminate\Support\Facades\File;
-
-use Illuminate\Support\Str;
-
-use Hash;
-use Auth;
-use Mail;
 use DB;
+
+use Auth;
+use Hash;
+use Mail;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Patient;
+use App\Models\Medicine;
+use App\Models\UserInfo;
+use App\Traits\SMSTrait;
+use App\Models\Appoinment;
+use App\Models\Gynaecology;
+use Illuminate\Support\Str;
+use App\Models\OtherService;
+use App\Models\Prescription;
+use Illuminate\Http\Request;
+use App\Models\ClinicalNotes;
+use App\Models\PediatricForm;
+use App\Models\Physiotherapy;
+use App\Models\WomenWellness;
+use App\Models\PatientDentalForm;
+
+use App\Models\InvestigationReports;
+
+use App\Models\PatientPediatricForm;
+use App\Models\PrescriptionMedicine;
+use Illuminate\Support\Facades\File;
+use App\Models\PatientVaccinationForm;
+use App\Models\AnthropometryGrowthCharts;
 
 
 
@@ -1358,7 +1359,24 @@ class DoctorController extends Controller
         }
 
     }
-    public function GetOtherServices(Request $request, Appoinment $appoinment, Patient $patient){
+
+    public function GetOtherServices(Request $request, Appoinment $appoinment, Patient $patient)
+    {
+
+        $user = $patient->user;
+        $notes = OtherService::where('patient_id', $patient->id)
+                            ->where('appointment_id', $appoinment->id)
+                            ->orderBy('id', 'DESC')
+                            ->get();
+        $get_ap_status = Appoinment::where('id', $appoinment->id)->first();
+        $app_status = $get_ap_status->status;
+
+        return view('pages.doctor.patient.other-services', compact('user', 'patient', 'appoinment', 'app_status', 'notes'));
+    }
+
+
+
+     public function GetOtherServicesNote(Request $request, Appoinment $appoinment, Patient $patient){
 
         $user = $patient->user;
         $getdata = Prescription::where('patient_id',$patient->id)
@@ -1367,33 +1385,97 @@ class DoctorController extends Controller
         $get_ap_status= Appoinment::where('id',$appoinment->id)->first();
         $app_status = $get_ap_status->status;
 
-        return view('pages.doctor.patient.other-services', compact('user','patient','appoinment','app_status','getdata'));
+        return view('pages.doctor.patient._other-services-note', compact('user','patient','appoinment','app_status','getdata'));
     }
-    public function PostPatientOtherServiceForm(Request $request, Patient $patient){
 
+  public function postPatientOtherServiceForm(Request $request, Patient $patient)
+    {
         $data = $request->except('_token','app_status','appointment_id');
 
         if($request->app_status == 'assigned') {
+            $notes = $request->input('other_services');
 
-        $formSave= Prescription::where(['appointment_id' => $request->appointment_id,'patient_id'=>$patient->id])->first();
+            // Create a new OtherService instance for each note
+            foreach (explode("\n", $notes) as $note) {
+                OtherService::create([
+                    'patient_id' => $patient->id,
+                    'appointment_id' => $request->appointment_id,
+                    'doctor_id' => $request->doctor_id,
+                    'notes' => $note,
+                ]);
+            }
 
-        if(!$formSave){
-          $formSave = new Prescription();
+            // Fetch the appointment ID from the request
+            $appointmentId = $request->appointment_id;
+
+            // return redirect()->back()->with('success', 'Notes Saved Successfully');
+            return redirect()->route('doctor.patient.other_services', ['appoinment' => $appointmentId, 'patient' => $patient->id])->with('success', 'Note Saved Successfully');
+        } else {
+            return redirect()->back()->with('error', 'Notes Not Saved');
         }
-        $formSave->patient_id=$patient->id;
-        $formSave->appointment_id=$request->appointment_id;
-        $formSave->other_services = $request->other_services;
-        $formSave->save();
-
-        return redirect()->back()->with('success', 'Notes Saved Successfuly');
-        }
-        else
-        {
-            return redirect()->back()->with('error', 'Notes Not Save');
-
-        }
-
     }
+
+    public function editOtherService(Patient $patient, OtherService $note)
+    {
+        return view('pages.doctor.patient._other-service-editnote', compact('patient', 'note'));
+    }
+
+    public function deleteOtherService(Request $request, $patientId, $noteId)
+    {
+        // Find the note by its ID
+        $note = OtherService::findOrFail($noteId);
+
+        // Check if the note belongs to the specified patient
+        if ($note->patient_id != $patientId) {
+            return redirect()->back()->with('error', 'Unauthorized access');
+        }
+
+        // Delete the note
+        $note->delete();
+
+        return redirect()->back()->with('success', 'Note deleted successfully');
+    }
+
+    public function updateOtherService(Request $request, Patient $patient, OtherService $note)
+    {
+        $data = $request->validate([
+            'notes' => 'required|string', // Add any validation rules you need
+        ]);
+
+        $note->update($data);
+
+        return redirect()->route('doctor.patient.other_services', ['appoinment' => $note->appointment_id, 'patient' => $note->patient_id])->with('success', 'Note Updated Successfully');
+    }
+
+
+
+
+
+    // public function PostPatientOtherServiceForm(Request $request, Patient $patient){
+
+    //     $data = $request->except('_token','app_status','appointment_id');
+
+    //     if($request->app_status == 'assigned') {
+
+    //     $formSave= Prescription::where(['appointment_id' => $request->appointment_id,'patient_id'=>$patient->id])->first();
+
+    //     if(!$formSave){
+    //       $formSave = new Prescription();
+    //     }
+    //     $formSave->patient_id=$patient->id;
+    //     $formSave->appointment_id=$request->appointment_id;
+    //     $formSave->other_services = $request->other_services;
+    //     $formSave->save();
+
+    //     return redirect()->back()->with('success', 'Notes Saved Successfuly');
+    //     }
+    //     else
+    //     {
+    //         return redirect()->back()->with('error', 'Notes Not Save');
+
+    //     }
+
+    // }
 
     public function PostGrowthChart(Request $request)
     {
