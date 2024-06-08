@@ -418,7 +418,7 @@ if (!function_exists('helperGenerteHtml')) {
                 $html .= ' <div class="' . $data->class . '">';
                 $html .= ' <label for="' . $data->id . '" class="form-label">' . $data->label . ' </label>';
                 $html .= ' <input type="' . $data->input_type . '" class="form-field" id="' . $data->id . '" name="' . $data->name . '" value="' . $value . '"><span class="ps-2"
-                
+
                 >' . $suffix . '</span>';
                 $html .= '</div>';
                 $html .= '</div>';
@@ -537,7 +537,7 @@ if (!function_exists('helperGenerteHtmlDentalForm')) {
                 if (isset($data->name2)) {
                     $html .= ' <input type="' . $data->input_type2 . '" class="' . $data->class2 . '" id="' . $data->id2 . '" name="' . $data->name2 . '" value="' . $value2 . '">';
                 }
-                
+
                 $html .= !isset($data->styleinline) ? '</div>' : '';
 
 

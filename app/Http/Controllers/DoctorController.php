@@ -1371,10 +1371,11 @@ class DoctorController extends Controller
     {
 
         $user = $patient->user;
-        $notes = OtherService::where('patient_id', $patient->id)
-                            ->where('appointment_id', $appoinment->id)
-                            ->orderBy('id', 'DESC')
-                            ->get();
+        $notes = OtherService::orderBy('id', 'DESC')->get();
+        // $notes = OtherService::where('patient_id', $patient->id)
+        //                     ->where('appointment_id', $appoinment->id)
+        //                     ->orderBy('id', 'DESC')
+        //                     ->get();
         $get_ap_status = Appoinment::where('id', $appoinment->id)->first();
         $app_status = $get_ap_status->status;
 
@@ -1395,7 +1396,7 @@ class DoctorController extends Controller
         return view('pages.doctor.patient._other-services-note', compact('user','patient','appoinment','app_status','getdata'));
     }
 
-  public function postPatientOtherServiceForm(Request $request, Patient $patient)
+    public function postPatientOtherServiceForm(Request $request, Patient $patient)
     {
         $data = $request->except('_token','app_status','appointment_id');
 
@@ -1422,9 +1423,36 @@ class DoctorController extends Controller
         }
     }
 
-    public function editOtherService(Patient $patient, OtherService $note)
+    public function editOtherService(Request $request, Appoinment $appoinment, Patient $patient, OtherService $note)
     {
-        return view('pages.doctor.patient._other-service-editnote', compact('patient', 'note'));
+        $user = $patient->user;
+        return view('pages.doctor.patient._other-service-editnote', compact('user','patient', 'note','appoinment'));
+    }
+
+    public function postPatientOtherServiceUpdate(Request $request, Patient $patient, OtherService $note)
+    {
+        $data = $request->except('_token','app_status','appointment_id');
+
+        if($request->app_status == 'assigned') {
+            $notes = $request->input('other_services');
+
+            $data = $request->validate([
+                'notes' => 'required|string',
+            ]);
+
+            // Update the existing note
+            $note->update([
+                'notes' => $data['notes'],
+            ]);
+
+            // Fetch the appointment ID from the note
+            $appointmentId = $note->appointment_id;
+
+            // return redirect()->back()->with('success', 'Notes Saved Successfully');
+            return redirect()->route('doctor.patient.other_services', ['appoinment' => $appointmentId, 'patient' => $patient->id])->with('success', 'Note Updated Successfully');
+        } else {
+            return redirect()->back()->with('error', 'Notes Not Saved');
+        }
     }
 
     public function deleteOtherService(Request $request, $patientId, $noteId)

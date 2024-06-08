@@ -568,9 +568,64 @@ class AdminController extends Controller
     }
 
     public function appointmentBilling($appointment){
+        // Find the appointment
         $appointment = Appoinment::find($appointment);
-        return view('pages.admin.patient.appointment-billing',compact('appointment'));
+
+        // Check if the appointment exists
+        if (!$appointment) {
+            // Redirect the user or show an error message
+            return redirect()->back()->with('error', 'Appointment not found.');
+        }
+
+        // Find the doctor
+        $doctor = User::find($appointment->doctor_id);
+
+        // Check if the doctor exists
+        if (!$doctor) {
+            // Redirect the user or show an error message
+            return redirect()->back()->with('error', 'Doctor not found.');
+        }
+
+        // Find the user info
+        $userInfo = UserInfo::where('user_id', $doctor->id)->first();
+
+        // Check if the user info exists
+        if (!$userInfo) {
+            // Redirect the user or show an error message
+            return redirect()->back()->with('error', 'User info not found.');
+        }
+
+        // Get the specialist types
+        $specialistTypes = UserInfo::pluck('specialist_type', 'id')->unique();
+
+        // Get the list of doctors
+        $doctorlist = User::with('roles')->whereHas('roles', function($q) {
+            $q->where('name', 'doctor');
+        })->get()->pluck('full_name', 'id');
+
+        // Check if the doctor list is empty
+        if ($doctorlist->isEmpty()) {
+            // Redirect the user or show an error message
+            return redirect()->back()->with('error', 'No doctors found.');
+        }
+
+        // Return the view with the necessary data
+        return view('pages.admin.patient.appointment-billing', compact('appointment', 'doctor', 'userInfo', 'specialistTypes', 'doctorlist'));
     }
+
+
+    // public function appointmentBilling($appointment){
+    //     $appointment = Appoinment::find($appointment);
+
+    //     $doctor = User::find($appointment->doctor_id);
+    //     $userInfo = Userinfo::where('user_id', $doctor->id)->first();
+    //     $specialistTypes = UserInfo::pluck('specialist_type', 'id')->unique();
+    //     $doctorlist = User::with('roles')->whereHas('roles', function($q) {
+    //         $q->where('name', 'doctor');
+    //     })->get()->pluck('full_name', 'id');
+
+    //     return view('pages.admin.patient.appointment-billing',compact('appointment', 'doctor','userInfo','specialistTypes','doctorlist'));
+    // }
 
     public function appointmentBillingSave(Request $req){
         if($req->appoinment_id){
@@ -578,6 +633,8 @@ class AdminController extends Controller
             $appointment->doctor_fee = $req->doctor_fee;
             $appointment->consultant_fee = $req->consultant_fee;
             $appointment->notes = $req->notes;
+            $appointment->assigned_doctor = $req->doctor_id;
+            $appointment->assigned_specialists = $req->specialists;
             $appointment->save();
         }
         return redirect()->back()->with('success', 'Appointment Fees Data Updated Successfully');

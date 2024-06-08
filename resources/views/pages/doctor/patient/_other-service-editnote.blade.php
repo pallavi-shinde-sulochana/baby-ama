@@ -50,7 +50,7 @@ $get = isset($getdata->other_services) ? json_decode($getdata->other_services) :
         <div class="d-flex justify-content-start align-items-center gap-4 mb-5">
             <a type="button" href="{{ route('doctor.appointments') }}" class="baby-secondary-btn border-1 text-center"
                 data-bs-dismiss="modal">Cancel</a>
-            <button type="submit" class="baby-primary-btn">Save</button>
+            <button type="submit" class="baby-primary-btn">Update</button>
         </div>
     </form>
 

@@ -10,4 +10,9 @@ class OtherService extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class);
+    }
 }

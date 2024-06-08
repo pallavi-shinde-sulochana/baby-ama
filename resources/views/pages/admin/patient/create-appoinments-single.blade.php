@@ -4,36 +4,7 @@
 
  $data = $appointment;
 @endphp
-<style>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    .patient-info {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .patient-info p {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-    }
-
-    .patient-info p span:first-child {
-        flex: 0 0 40%;
-        text-align: left;
-    }
-
-    .patient-info p span:last-child {
-        flex: 0 0 50%;
-        text-align: left;
-    }
-
-    .patient-info p span.separator {
-    flex: 0 0 auto;
-    text-align: center;
-    width: 10px; /* Adjust width as needed */
-    }
-</style>
-	<section >
+	<section>
     	<div class="container">
 
         	<div class="row ">

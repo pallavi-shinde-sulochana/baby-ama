@@ -1,5 +1,6 @@
 @extends('base.doctor-dashboard')
 @section('doctor-content')
+
 @php
 use App\Models\Appoinment;
 $appointment = $appoinment;
@@ -39,19 +40,46 @@ $id = $appointment->id;
             @endphp
 
             {{-- Display the name of the doctor for the associated appointment --}}
-            <label for="other_services" class="form-label">{{ $associatedAppointment->doctor->first_name . ' ' .
-                $associatedAppointment->doctor->last_name }} :</label>
+            <div class="mb-8 note-container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <label for="note_{{ $note->id }}" class="form-label">
+                        {{ $associatedAppointment->doctor->first_name . ' ' . $associatedAppointment->doctor->last_name
+                        }}
+                    </label>
+                </div>
+                <div class="d-flex gap-2 ">
+                    <div class="card bg-transparant border-secondary border"
+                        style="height: 100px; width: 100%; padding: 10px;">
+                        {{ $note->notes }}
+                    </div>
 
-            <textarea rows="" class="form-control mb-5 pb-5" disabled>{{ $note->notes }}</textarea>
-
-            <a href="{{ route('doctor.patient.other_services.edit', ['patient' => $patient->id, 'note' => $note->id]) }}"
-                class="btn btn-primary">Edit</a>
-                <form action="{{ route('doctor.patient.other_services.delete', ['patient' => $patient->id, 'note' => $note->id]) }}"
-                    method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
+                    @if(Auth::check() && Auth::user()->id === $note->doctor_id)
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle rounded-circle bg-transparent border"
+                            type="button" id="dropdownMenuButton_{{ $note->id }}" data-bs-toggle="dropdown"
+                            aria-expanded="false" style="width: 30px; height: 30px; padding: 0;">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_{{ $note->id }}">
+                            <li><a class="dropdown-item"
+                                    href="{{ route('doctor.patient.other_services.edit', ['appoinment' => $appointment->id, 'patient' => $patient->id, 'note' => $note->id]) }}">Edit
+                                    the Note</a>
+                            </li>
+                            <li>
+                                <form
+                                    action="{{ route('doctor.patient.other_services.delete', ['patient' => $patient->id, 'note' => $note->id]) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Are you sure you want to delete this note?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="dropdown-item">Delete the Note</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    @endif
+                </div>
+                <div class="text-muted small text-end">Created at: {{ $note->created_at }}</div>
+            </div>
             @endforeach
         </div>
     </div>
@@ -69,22 +97,49 @@ $id = $appointment->id;
 @endsection
 <script>
     function deleteNote(noteId) {
-    if (confirm('Are you sure you want to delete this note?')) {
-    $.ajax({
-    url: '/patient/{{ $patient->id }}/other_services/' + noteId,
-    type: 'DELETE',
-    headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    success: function(response) {
-    // Remove the note from the view
-    $('#note_' + noteId).remove();
-    alert('Note deleted successfully.');
-    },
-    error: function(xhr) {
-    alert('Failed to delete note.');
-    }
-    });
-    }
+        if (confirm('Are you sure you want to delete this note?')) {
+            $.ajax({
+                url: '/patient/{{ $patient->id }}/other_services/' + noteId,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    // Remove the note from the view
+                    $('#note_' + noteId).remove();
+                    alert('Note deleted successfully.');
+                },
+                error: function(xhr) {
+                    alert('Failed to delete note.');
+                }
+            });
+        }
     }
 </script>
+
+<style>
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+    .dropdown-menu {
+        min-width: auto;
+    }
+
+    .btn-secondary {
+        background-color: transparent !important;
+        border: 1px solid #000 !important;
+    }
+
+    .btn-secondary .bi-chevron-down {
+        color: #000;
+    }
+
+    .note-container:hover .btn-secondary {
+        visibility: visible;
+    }
+
+    .btn-secondary {
+        visibility: hidden;
+    }
+</style>

@@ -72,10 +72,10 @@
     }
 
     #sidebar-wrapper .sidebar-inner-wrapper {
-        /*display: -webkit-box;   
-        display: -ms-flexbox;  
-        display: -webkit-flex; 
-        display: flex;         
+        /*display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
         flex-direction:column;*/
     }
 

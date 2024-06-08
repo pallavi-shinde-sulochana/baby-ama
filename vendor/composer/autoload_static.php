@@ -265,9 +265,9 @@ class ComposerStaticInita05e604b603682f37d64f8c4dfa9960d
         ),
         'Yajra\\DataTables\\' => 
         array (
-            0 => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src',
+            0 => __DIR__ . '/..' . '/yajra/laravel-datatables-buttons/src',
             1 => __DIR__ . '/..' . '/yajra/laravel-datatables-html/src',
-            2 => __DIR__ . '/..' . '/yajra/laravel-datatables-buttons/src',
+            2 => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src',
         ),
         'Whoops\\' => 
         array (
@@ -431,8 +431,8 @@ class ComposerStaticInita05e604b603682f37d64f8c4dfa9960d
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -825,6 +825,7 @@ class ComposerStaticInita05e604b603682f37d64f8c4dfa9960d
         'App\\Models\\Gynaecology' => __DIR__ . '/../..' . '/app/Models/Gynaecology.php',
         'App\\Models\\InvestigationReports' => __DIR__ . '/../..' . '/app/Models/InvestigationReports.php',
         'App\\Models\\Medicine' => __DIR__ . '/../..' . '/app/Models/Medicine.php',
+        'App\\Models\\OtherService' => __DIR__ . '/../..' . '/app/Models/OtherService.php',
         'App\\Models\\Patient' => __DIR__ . '/../..' . '/app/Models/Patient.php',
         'App\\Models\\PatientDentalForm' => __DIR__ . '/../..' . '/app/Models/PatientDentalForm.php',
         'App\\Models\\PatientPediatricForm' => __DIR__ . '/../..' . '/app/Models/PatientPediatricForm.php',
@@ -964,6 +965,9 @@ class ComposerStaticInita05e604b603682f37d64f8c4dfa9960d
         'Aws\\AuditManager\\Exception\\AuditManagerException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AuditManager/Exception/AuditManagerException.php',
         'Aws\\AugmentedAIRuntime\\AugmentedAIRuntimeClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AugmentedAIRuntime/AugmentedAIRuntimeClient.php',
         'Aws\\AugmentedAIRuntime\\Exception\\AugmentedAIRuntimeException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AugmentedAIRuntime/Exception/AugmentedAIRuntimeException.php',
+        'Aws\\Auth\\AuthSchemeResolver' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Auth/AuthSchemeResolver.php',
+        'Aws\\Auth\\AuthSchemeResolverInterface' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Auth/AuthSchemeResolverInterface.php',
+        'Aws\\Auth\\AuthSelectionMiddleware' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Auth/AuthSelectionMiddleware.php',
         'Aws\\Auth\\Exception\\UnresolvedAuthSchemeException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Auth/Exception/UnresolvedAuthSchemeException.php',
         'Aws\\AutoScalingPlans\\AutoScalingPlansClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AutoScalingPlans/AutoScalingPlansClient.php',
         'Aws\\AutoScalingPlans\\Exception\\AutoScalingPlansException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/AutoScalingPlans/Exception/AutoScalingPlansException.php',
@@ -1373,6 +1377,9 @@ class ComposerStaticInita05e604b603682f37d64f8c4dfa9960d
         'Aws\\IdempotencyTokenMiddleware' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/IdempotencyTokenMiddleware.php',
         'Aws\\IdentityStore\\Exception\\IdentityStoreException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/IdentityStore/Exception/IdentityStoreException.php',
         'Aws\\IdentityStore\\IdentityStoreClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/IdentityStore/IdentityStoreClient.php',
+        'Aws\\Identity\\AwsCredentialIdentity' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Identity/AwsCredentialIdentity.php',
+        'Aws\\Identity\\BearerTokenIdentity' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Identity/BearerTokenIdentity.php',
+        'Aws\\Identity\\IdentityInterface' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Identity/IdentityInterface.php',
         'Aws\\Identity\\S3\\S3ExpressIdentity' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Identity/S3/S3ExpressIdentity.php',
         'Aws\\Identity\\S3\\S3ExpressIdentityProvider' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Identity/S3/S3ExpressIdentityProvider.php',
         'Aws\\ImportExport\\Exception\\ImportExportException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/ImportExport/Exception/ImportExportException.php',
@@ -1839,6 +1846,8 @@ class ComposerStaticInita05e604b603682f37d64f8c4dfa9960d
         'Aws\\Swf\\SwfClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Swf/SwfClient.php',
         'Aws\\Synthetics\\Exception\\SyntheticsException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Synthetics/Exception/SyntheticsException.php',
         'Aws\\Synthetics\\SyntheticsClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Synthetics/SyntheticsClient.php',
+        'Aws\\TaxSettings\\Exception\\TaxSettingsException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/TaxSettings/Exception/TaxSettingsException.php',
+        'Aws\\TaxSettings\\TaxSettingsClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/TaxSettings/TaxSettingsClient.php',
         'Aws\\Textract\\Exception\\TextractException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Textract/Exception/TextractException.php',
         'Aws\\Textract\\TextractClient' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/Textract/TextractClient.php',
         'Aws\\TimestreamInfluxDB\\Exception\\TimestreamInfluxDBException' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/TimestreamInfluxDB/Exception/TimestreamInfluxDBException.php',
@@ -8097,11 +8106,13 @@ class ComposerStaticInita05e604b603682f37d64f8c4dfa9960d
         'Symfony\\Component\\CssSelector\\Node\\ElementNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/ElementNode.php',
         'Symfony\\Component\\CssSelector\\Node\\FunctionNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/FunctionNode.php',
         'Symfony\\Component\\CssSelector\\Node\\HashNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/HashNode.php',
+        'Symfony\\Component\\CssSelector\\Node\\MatchingNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/MatchingNode.php',
         'Symfony\\Component\\CssSelector\\Node\\NegationNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/NegationNode.php',
         'Symfony\\Component\\CssSelector\\Node\\NodeInterface' => __DIR__ . '/..' . '/symfony/css-selector/Node/NodeInterface.php',
         'Symfony\\Component\\CssSelector\\Node\\PseudoNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/PseudoNode.php',
         'Symfony\\Component\\CssSelector\\Node\\SelectorNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/SelectorNode.php',
         'Symfony\\Component\\CssSelector\\Node\\Specificity' => __DIR__ . '/..' . '/symfony/css-selector/Node/Specificity.php',
+        'Symfony\\Component\\CssSelector\\Node\\SpecificityAdjustmentNode' => __DIR__ . '/..' . '/symfony/css-selector/Node/SpecificityAdjustmentNode.php',
         'Symfony\\Component\\CssSelector\\Parser\\Handler\\CommentHandler' => __DIR__ . '/..' . '/symfony/css-selector/Parser/Handler/CommentHandler.php',
         'Symfony\\Component\\CssSelector\\Parser\\Handler\\HandlerInterface' => __DIR__ . '/..' . '/symfony/css-selector/Parser/Handler/HandlerInterface.php',
         'Symfony\\Component\\CssSelector\\Parser\\Handler\\HashHandler' => __DIR__ . '/..' . '/symfony/css-selector/Parser/Handler/HashHandler.php',

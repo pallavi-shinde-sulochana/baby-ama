@@ -61,7 +61,8 @@ Route::prefix('doctor')->middleware('doctor')->group(function () {
     Route::get('appointment/{appoinment}/patient/{patient}/other_services/notes', [DoctorController::class, 'GetOtherServicesNote'])->name('doctor.patient.other_services.note');
     Route::post('/patient/{patient}/other_services/save', [DoctorController::class, 'PostPatientOtherServiceForm'])->name('doctor.patient.other_services.post');
 
-    Route::get('/patient/{patient}/other_services/{note}/edit', [DoctorController::class, 'editOtherService'])->name('doctor.patient.other_services.edit');
+    Route::get('appointment/{appoinment}/patient/{patient}/other_services/{note}/edit', [DoctorController::class, 'editOtherService'])->name('doctor.patient.other_services.edit');
+    Route::put('/patient/{patient}/other_services/{note}', [DoctorController::class, 'updateOtherService'])->name('doctor.patient.other_services.update');
 
     Route::delete('/patient/{patient}/other_services/{note}', [DoctorController::class, 'deleteOtherService'])->name('doctor.patient.other_services.delete');
 

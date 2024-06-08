@@ -12,6 +12,11 @@ class Patient extends Model
 
     protected $guarded = [];
 
+    public function otherServices()
+    {
+        return $this->hasMany(OtherService::class);
+    }
+
     public function user()
     {
         // return $this->hasOne(User::class);
