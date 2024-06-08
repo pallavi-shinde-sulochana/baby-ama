@@ -23,14 +23,14 @@
                                             @if($patient->father_name)
                                             <p>
                                                 <span><b>Father Name</b></span>
-                                                <span class="separator">:</span>
+                                                <span class="separator">-</span>
                                                 <span>{{$patient->father_name}}</span>
                                             </p>
                                             @endif
                                             @if($patient->mother_name)
                                             <p>
                                                 <span><b>Mother Name</b></span>
-                                                <span class="separator">:</span>
+                                                <span class="separator">-</span>
                                                 <span>{{$patient->mother_name}}</span>
                                             </p>
                                             @endif
@@ -41,21 +41,21 @@
                                             @if($patient->address)
                                             <p>
                                                 <span><b>Address</b></span>
-                                                <span class="separator">:</span>
+                                                <span class="separator">-</span>
                                                 <span>{{$patient->address}}</span>
                                             </p>
                                             @endif
                                             @if($patient->father_phone)
                                             <p>
                                                 <span><b>Primary Contact</b></span>
-                                                <span class="separator">:</span>
+                                                <span class="separator">-</span>
                                                 <span>{{$patient->father_phone}}</span>
                                             </p>
                                             @endif
                                             @if($patient->mother_phone)
                                             <p>
                                                 <span><b>Secondary Contact</b></span>
-                                                <span class="separator">:</span>
+                                                <span class="separator">-</span>
                                                 <span>{{$patient->mother_phone}}</span>
                                             </p>
                                             @endif
@@ -66,14 +66,14 @@
                                             @if($patient->gender)
                                             <p>
                                                 <span><b>Gender</b></span>
-                                                <span class="separator">:</span>
+                                                <span class="separator">-</span>
                                                 <span>{{$patient->gender}}</span>
                                             </p>
                                             @endif
                                             @if($patient->age)
                                             <p>
                                                 <span><b>Age</b></span>
-                                                <span class="separator">:</span>
+                                                <span class="separator">-</span>
                                                 <span>{{$patient->age}}</span>
                                             </p>
                                             @endif

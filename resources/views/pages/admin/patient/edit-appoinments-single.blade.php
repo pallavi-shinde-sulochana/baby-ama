@@ -1,5 +1,35 @@
 <x-base-layout>
 
+	<style>
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+		.patient-info {
+			display: flex;
+			justify-content: space-between;
+		}
+	
+		.patient-info p {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+		}
+	
+		.patient-info p span:first-child {
+			flex: 0 0 40%;
+			text-align: left;
+		}
+	
+		.patient-info p span:last-child {
+			flex: 0 0 50%;
+			text-align: left;
+		}
+	
+		.patient-info p span.separator {
+		flex: 0 0 auto;
+		text-align: center;
+		width: 10px; /* Adjust width as needed */
+		}
+	</style>
+
 	@php
 	
 	 $data = $appointment;
@@ -14,31 +44,46 @@
 								<div class="row p-2">
 									<div class="col-md-12 text-center">
 										<h3>Appoinment Details</h3>
-	
-									</div>
-									 <div class="col-md-3">
-										 <p for="first_name" class=" font-weight-normal">
-											 Name - <b> {{$appointment->first_name}}</b>
-										 </p>
-									 </div>
-									 <div class="col-md-3">
-										 <p for="first_name" class=" font-weight-normal">
-											 Need to see - <b> {{ucfirst($appointment->specialists)}}</b>
-										 </p>
-	
-									 </div>
-									 <div class="col-md-6">
-										 <p for="first_name" class=" font-weight-normal">
-											 Appoinment Date & Session - <b> {{$appointment->appoinment_date}} / {{ucfirst($appointment->appoinment_session)}}</b>
-										 </p>
-	
-	
-									 </div>
-									 <div class="col-md-5">
-										 <p for="first_name" class=" font-weight-normal">
-											 Description - <b> {{$appointment->description}}</b>
-										 </p>
-									 </div>
+                                    </div>
+
+										<div class="col-md-4">
+											<div class="patient-info">
+												@if($appointment->first_name)
+												<p>
+													<span><b>Name</b></span>
+													<span class="separator">-</span>
+													<span>{{$appointment->first_name}}</span>
+												</p>
+												@endif
+												@if($appointment->appoinment_date)
+												<p>
+													<span><b>Appoinment Date & Session</b></span>
+													<span class="separator">-</span>
+													<span>{{$appointment->appoinment_date}} / {{ucfirst($appointment->appoinment_session)}}</span>
+												</p>
+												@endif
+											</div>
+										</div>
+		
+										<div class="col-md-4">
+											<div class="patient-info">
+												@if($appointment->specialists)
+												<p>
+													<span><b>Need to see</b></span>
+													<span class="separator">-</span>
+													<span>{{$appointment->specialists}}</span>
+												</p>
+												@endif
+												@if($appointment->description)
+												<p>
+													<span><b>Description</b></span>
+													<span class="separator">-</span>
+													<span>{{$appointment->description}}</span>
+												</p>
+												@endif
+											</div>
+										</div>
+									 
 								 {{-- 	<div class="col-md-12 text-center">
 										  <a  href="{{route('admin.patients.update',$appointment->id)}}" class="btn btn-info btn-sm">Edit Appoinment Detail</a>
 									 </div> --}}

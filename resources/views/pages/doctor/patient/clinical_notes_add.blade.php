@@ -34,7 +34,7 @@
             }
             ?>
             <form
-                action="{{ route('doctor.appointment.clinical.add.post', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'type' => $typ]) }}"
+                action="{{ route('doctor.patient.clinical_notes.post', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'type' => $typ]) }}"
                 method="POST">
                 @csrf
                 <div class="head baby-shadow py-3 px-5 mb-4">

@@ -31,6 +31,12 @@ class PharmacyController extends Controller
 
     public function pageLogin(){
         return view('pages.pharmacy.login');
+        // $patients = PrescriptionMedicine::where('prescription_status','pending')
+        // ->groupBy('prescription_id')
+        // ->with("user")
+        // ->orderBy('id','desc')->paginate(25);
+
+        // return view('pages.pharmacy.billing.prescription-list',compact('patients'));
     }
 
     public function loginAction(Request $request){
@@ -358,8 +364,17 @@ public function DeclinedPrescription(Request $request){
      $invoice_details = PrescriptionMedicine::where(['prescription_status' => 'pending','prescription_id'=>$prid])
         ->get();
         $user = Patient::where('user_id',$userid)->first();
+        $prescription_id = PrescriptionMedicine::where('prescription_id',$prid)->first();
+        return view('pages.pharmacy.billing.patient-prescription-invoice',compact('prescription_id','invoice_details','user'));
+    }
 
-        return view('pages.pharmacy.billing.patient-prescription-invoice',compact('invoice_details','user'));
+    public function PrintPatientInvoice($prid,$userid){
+        $invoice_details = PrescriptionMedicine::where(['prescription_status' => 'pending','prescription_id'=>$prid])
+        ->get();
+        $user = Patient::where('user_id',$userid)->first();
+       
+        return view('pages.pharmacy.billing.print-patient-prescription-invoice',compact('invoice_details','user'));
+
     }
 
     public function SearchPatientlist(Request $request){

@@ -1894,39 +1894,47 @@
                     </div>
                 </div>
 
-
                 <div id="" class="col-12 col-md-9 col-lg-8 col-xl-7 my-5 pt-5"> <label for="diagnosis"
                         class="form-label">DIAGNOSIS : </label>
                     <textarea rows="" class="form-control" id="diagnosis" name="diagnosis"><?php if (isset($get->diagnosis)) {
                         echo $get->diagnosis;
                     } ?></textarea>
                 </div>
+                
+                <div class="col-12 col-md-9 col-lg-8 col-xl-7 px-0">
+                    <div id="" class="">
+                        <label for="management" class="form-label">MANAGEMENT : </label>
+                            <textarea rows="" class="form-control" id="management" name="management"><?php if (isset($get->management)) {
+                                    echo $get->management;
+                            } ?></textarea>
+                </div>
+                       
+                </div>
+
                 <div class="col-12  mb-5">
                     <div class="row mx-0 align-items-center">
-                        <div class="col-12 col-md-9 col-lg-8 col-xl-7 px-0">
-                            <div id="" class="">
-                                <label for="management" class="form-label">MANAGEMENT : </label>
-                                <textarea rows="" class="form-control" id="management" name="management"><?php if (isset($get->management)) {
-                                    echo $get->management;
-                                } ?></textarea>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-3 col-lg-4 col-xl-5">
-                            <div class="d-flex justify-content-start align-items-center gap-4 my-5">
-                                <?php if(isset($getdata->id)) { ?>
-                                <a class="baby-primary-btn"
-                                    href="{{ route('doctor.appointment.patient.prescription.medicine', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'pr_id' => $getdata->id, 'type' => 'pediatric']) }}">+
-                                    Add Prescriptions</a>
+                    <div id="" class="col-12 col-md-9 col-lg-8 col-xl-7 mt-5"> <label for="follow_up_advice"
+                            class="form-label">FOLLOW-UP ADVICE : </label>
+                        <textarea rows="" class="form-control" id="follow_up_advice" name="follow_up_advice"><?php if (isset($get->follow_up_advice)) {
+                            echo $get->follow_up_advice;
+                        } ?></textarea>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-4 col-xl-5">
+                        <div class="d-flex justify-content-start align-items-center gap-4 my-5">
+                            <?php if(isset($getdata->id)) { ?>
+                            <a class="baby-primary-btn"
+                                href="{{ route('doctor.appointment.patient.prescription.medicine', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'pr_id' => $getdata->id, 'type' => 'pediatric']) }}">+
+                                Add Prescriptions</a>
 
-                                <?php } else { ?>
-                                <div class="tooltip1">
+                            <?php } else { ?>
+                            <div class="tooltip1">
 
-                                    <a class="baby-primary-btn" href="{{ route('doctor.appointment.patient.prescription.medicine', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'pr_id' => $data->id, 'type' => 'general']) }}">+ Add Prescriptions</a>
-                                    <span class="tooltip_text">Please update the paediatric case record form</span>
-                                </div>
-                                <?php } ?>
+                                <a class="baby-primary-btn" href="{{ route('doctor.appointment.patient.prescription.medicine', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'pr_id' => $data->id, 'type' => 'general']) }}">+ Add Prescriptions</a>
+                                <span class="tooltip_text">Please update the paediatric case record form</span>
                             </div>
+                            <?php } ?>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -2003,14 +2011,7 @@
                         </div>
                     </div>
                 </div>
-                
-                <div id="" class="col-12 col-md-9 col-lg-8 col-xl-7 mt-5"> <label for="follow_up_advice"
-                        class="form-label">FOLLOW-UP ADVICE : </label>
-                    <textarea rows="" class="form-control" id="follow_up_advice" name="follow_up_advice"><?php if (isset($get->follow_up_advice)) {
-                        echo $get->follow_up_advice;
-                    } ?></textarea>
 
-                </div>
             </div>
 
             <div class="d-flex justify-content-start align-items-center gap-4 mb-5">

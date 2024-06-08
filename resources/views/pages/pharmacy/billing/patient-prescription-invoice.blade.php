@@ -1,5 +1,69 @@
 @extends('base.pharmacy-dashboard')
 @section('pharmacy-content')
+<style type="text/css">
+        
+    #pdf_export tr th{
+        padding: 5px!important;
+        text-align: center;
+        color: #670e36!important;
+        font-weight: bold;
+    }
+    #pdf_export tr td{
+        /*font-weight: bold!important;*/
+        padding: 5px!important;
+        line-height: 1;
+
+    }
+    div#kt_content {
+        background: white;
+    }
+    div#kt_footer {
+        display: none!important;
+    }
+    
+    @media print {
+      .p-dis-row , #kt_aside,#kt_header,#kt_toolbar, #sidebar-wrapper, header, .navbar {
+        display: none;
+      }
+      .footer,#kt_footer,#pdf_print {
+            display: none;
+      }
+      body {-webkit-print-color-adjust: exact;}
+    }
+
+    @print {
+        @page :footer {
+            display: none
+        }
+      
+        @page :header {
+            display: none
+        }
+    }
+    .pdf-txt-color{
+           color: #670e36;
+           font-weight: bold;
+    }
+    .pdf-bg-color{
+       background-color: #670e36;
+       font-weight: bold;
+       color: white;
+    }
+    #footer {
+     height: 20px;
+     border-top:3px solid black;
+    }
+#page {
+/*     height: calc(85vh - 30px); */
+/*     viewport height - footer height*/
+}
+.medicine_dot_line{
+    border-bottom:1px dotted #000;
+}
+</style> 
+
+
+ <div class="container" id="page">
     <div class="pharmacy medicine-stacklist  p-5" style="margin-top: 50px;">
         <div class="row mx-0  justify-content-between p-sm-4">
             <div class="col-12 col-md-8">
@@ -107,11 +171,26 @@
                 </table>
                 <div class="mt-5 pt-5">
                     <div class="d-flex px-2 justify-content-start align-items-center gap-4 my-5">
-                        <button type="button" class="baby-primary-btn">Print</button>
-                        <a href="#" class="baby-secondary-btn border-1 text-center">Back</a>
+                        <button id="pdf_print" onclick="printDiv('printableArea')" class="baby-primary-btn" >Print</button>
+                        <a href="" class="baby-secondary-btn border-1 text-center">Back</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+ </div>   
 @endsection
+
+
+<script type="text/javascript">
+    function printDiv(divName) {
+           var today = new Date();
+           var timesheetdate=today.getDate()+'-'+today.getMonth()+1+'-'+today.getFullYear();
+            {{-- var patientName ="{{$patientName}}"; --}}
+            patientName = '';
+             patientName = patientName.replace(" ", "_");
+
+            document.title = "patient_"+patientName+"_prescription_"+timesheetdate;
+            window.print();
+       }
+</script>

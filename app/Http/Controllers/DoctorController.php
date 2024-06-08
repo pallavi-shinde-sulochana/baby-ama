@@ -426,7 +426,11 @@ class DoctorController extends Controller
         $get_ap_status= Appoinment::where('id',$appoinment->id)->first();
         $app_status = $get_ap_status->status;
 
-         return view('pages.doctor.patient.dental', compact('user','patient','appoinment','app_status','getdata'));
+        $type  = 'dental';
+        $pr_id = $getdata->id;
+        $pres = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$pr_id])->get();
+
+         return view('pages.doctor.patient.dental', compact('pres','user','patient','appoinment','app_status','getdata'));
     }
 
     public function PostPatientDentalForm(Request $request, Patient $patient){
@@ -1231,9 +1235,18 @@ class DoctorController extends Controller
     public function PostClinicalNotesForm(Request $request, Patient $patient){
 
         $data = $request->except('_token');
+        $type = $request->prescription_type;
         $formSave = new ClinicalNotes();
         $formSave->patient_id=$patient->id;
-        $formSave->answer = json_encode($data);
+
+            if($type=='pediatric'){
+            $formSave->pediatric = json_encode($data);
+            }
+
+            else{
+                $formSave->dental = json_encode($data);
+            }
+
         $formSave->save();
         return redirect()->back()->with('success', 'Clinical Notes Saved Successfuly');
     }
@@ -1338,8 +1351,12 @@ class DoctorController extends Controller
         $get_ap_status= Appoinment::where('id',$appoinment->id)->first();
         $app_status = $get_ap_status->status;
 
+        $type  = 'gynaecology';
+        $pr_id = $getdata->id;
+        $pres = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$pr_id])->get();
+
         //print_r($getdata); exit;
-        return view('pages.doctor.patient.gynaecology-case-record', compact('user','patient','appoinment','app_status','getdata'));
+        return view('pages.doctor.patient.gynaecology-case-record', compact('pres','user','patient','appoinment','app_status','getdata'));
 }
     public function PostGynaecologyCaseRecordForm(Request $request, Patient $patient){
 

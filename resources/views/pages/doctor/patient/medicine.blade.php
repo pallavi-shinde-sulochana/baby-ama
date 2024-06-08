@@ -1116,6 +1116,10 @@
         // alert(checkBoxes[i].checked);
 
         var error = 0;
+
+        $("#totaldays_" + id).attr("class", "form-control rounded-0");
+            error = 1;
+            
         if (intake_dosage == '') {
             $("#intake_dosage_" + id).attr("class", "form-control rounded-0 error-input");
             error = 0;
