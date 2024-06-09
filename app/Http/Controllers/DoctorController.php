@@ -342,25 +342,34 @@ class DoctorController extends Controller
 
 
 
-    public function GetPatientPediatricForm(Request $request, Appoinment $appoinment, Patient $patient){
 
-        $user    = $patient->user;
-        //$getdata = ClinicalNotes::where('patient_id',$patient->id)
-        $getdata = Prescription::where('patient_id',$patient->id)
-        ->where('appointment_id',$appoinment->id)
-        ->orderBy('id', 'DESC')->first();
+    public function GetPatientPediatricForm(Request $request, Appoinment $appoinment, Patient $patient)
+{
+    $user = $patient->user;
 
+    // Retrieve the latest prescription for the patient and appointment, if exists
+    $getdata = Prescription::where('patient_id', $patient->id)
+        ->where('appointment_id', $appoinment->id)
+        ->orderBy('id', 'DESC')
+        ->first();
 
-        $get_ap_status= Appoinment::where('id',$appoinment->id)->first();
-        $app_status = $get_ap_status->status;
+    // Get the appointment status
+    $get_ap_status = Appoinment::where('id', $appoinment->id)->first();
+    $app_status = $get_ap_status ? $get_ap_status->status : null;
 
-        $type  = 'pediatric';
+    $pres = collect(); // Initialize as an empty collection
+    $pr_id = null; // Initialize as null
+
+    if ($getdata) {
         $pr_id = $getdata->id;
-        $pres = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$pr_id])->get();
-
-
-         return view('pages.doctor.patient.pediatric', compact('pres','user','patient','getdata','appoinment','app_status'));
+        $type = 'pediatric';
+        $pres = PrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
     }
+
+    return view('pages.doctor.patient.pediatric', compact('pres', 'user', 'patient', 'getdata', 'appoinment', 'app_status', 'pr_id'));
+}
+
+
 
     public function PostPatientPediatricForm(Request $request, Patient $patient){
 
