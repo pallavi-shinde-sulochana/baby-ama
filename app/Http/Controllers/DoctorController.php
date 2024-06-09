@@ -358,8 +358,7 @@ class DoctorController extends Controller
         $pr_id = $getdata->id;
         $pres = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$pr_id])->get();
 
-
-         return view('pages.doctor.patient.pediatric', compact('pres','user','patient','getdata','appoinment','app_status'));
+        return view('pages.doctor.patient.pediatric', compact('pres','user','patient','getdata','appoinment','app_status'));
     }
 
     public function PostPatientPediatricForm(Request $request, Patient $patient){

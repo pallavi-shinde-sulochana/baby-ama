@@ -609,8 +609,13 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'No doctors found.');
         }
 
+        $type  = 'pediatric';
+        $pr_id = $getdata->id;
+        $pres = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$pr_id])->get();
+
+
         // Return the view with the necessary data
-        return view('pages.admin.patient.appointment-billing', compact('appointment', 'doctor', 'userInfo', 'specialistTypes', 'doctorlist'));
+        return view('pages.admin.patient.appointment-billing', compact('pres','appointment', 'doctor', 'userInfo', 'specialistTypes', 'doctorlist'));
     }
 
 
