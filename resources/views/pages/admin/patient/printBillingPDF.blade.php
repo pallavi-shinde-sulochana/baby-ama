@@ -154,6 +154,13 @@
                         <span>{{$appointment->father_name}}</span>
                     </p>
                     @endif
+                    @if($appointment->blood_group)
+                    <p>
+                        <span><b>Blood Group</b></span>
+                        <span class="separator">-</span>
+                        <span>{{$appointment->blood_group}}</span>
+                    </p>
+                    @endif
                 </div>
             </div>
 
