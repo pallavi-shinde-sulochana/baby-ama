@@ -75,184 +75,126 @@
 
 <div class="container" id="page">
     <div class="row" style="border-bottom:3px solid black;">
-        <div class="col-md-4 col-4">
+            <div class="col-md-5 col-6">
                 <img class="w-50" src="{{ asset('media/logos/babyama-logo.png') }}">
             </div>
-            <div class="col-md-8 col-8">
-                <p class="text-end"><br>
+            <div class="col-md-6 col-8">
+                <h1 class="text-end mt-"> INVOICE </h1>
+                {{-- <p class="text-end"><br>
                     <b>Babyama Paediatric Center</b><br>
                      babyamaclinic@gmail.com
                         <br>
                         9585599885,<br>
                         0422- 3502606, 0422-3502607.
-                    </p>
+                </p> --}}
             </div>
     </div>
     <div class="row mt-1">
-        <div class="col-12 col-md-12">
+        {{-- <div class="col-12 col-md-12">
             <p class="text-end">Date: <b>{{Date('d-M-Y')}}</b></p>
+        </div> --}}
+        <div class="col-4 col-md-4">
+            <p for="first_name" class=" font-weight-normal">
+                <b>BILL FROM : 
+                </b><br>
+                Babyama Paediatric Center</b><br>
+                babyamaclinic@gmail.com
+                <br>
+                9585599885,<br>
+                0422- 3502606, 0422-3502607.
+            </p>
         </div>
+        @if($appointment->user->patient)
+        @php
+           $patient = $appointment->user->patient;
+        @endphp
+        @endif
+        <div class="col-4 col-md-4">
+            <p for="first_name" class=" font-weight-normal">
+                <b>BILL TO : 
+                </b><br>
+                {{$patient->first_name.' '.$patient->last_name}}<br>
+                {{$patient->address}}
+                <br>
+                {{$patient->father_phone}},<br>
+            </p>
+        </div>
+        <div class="col-4 col-md-4">
+            <p for="first_name" class=" font-weight-normal">
+                <b>Invoice No : </b> <br>
+                <b>Date : </b>{{Date('d-M-Y')}} <br>
+                <b>Place : </b> <br>
+            </p>
+        </div>
+        <hr>
         <div class="col-12 col-md-12 row">
             <div class="col-md-12 text-center mb-5">
                 <h3>Appoinment Details</h3>
             </div>
-            <div class="col-md-3">
-                <p for="first_name" class=" font-weight-normal">
-                    Name - <b> {{$appointment->first_name}}</b>
-                </p>
-            </div>
-            <div class="col-md-3">
-                <p for="first_name" class=" font-weight-normal">
-                    Need to see - <b> {{$appointment->specialists}}</b>
-                </p>
-                     
-            </div>
-            <div class="col-md-6">
-                <p for="first_name" class=" font-weight-normal">
-                    Appoinment Date & Session - <b> {{$appointment->appoinment_date}} / {{$appointment->appoinment_session}}</b> 
-                </p>
-                
-                     
-            </div>
-            <div class="col-md-3">
-                <p for="first_name" class=" font-weight-normal">
-                    Phone - <b> {{$appointment->phone}}</b>
-                </p>
-            </div>
-            <div class="col-md-9">
-                <p for="first_name" class=" font-weight-normal">
-                    Description - <b> {{$appointment->description}}</b>
-                </p>
-            </div>
-            <div class="col-md-3">
-                <p for="first_name" class=" font-weight-normal">
-                    Doctor Fees - <b> {{$appointment->doctor_fee}}</b>
-                </p>
-            </div>
-            <div class="col-md-3">
-                <p for="first_name" class=" font-weight-normal">
-                    Consultant Fee - <b> {{$appointment->consultant_fee}}</b>
-                   
-                </p>
-            </div>
-            <div class="col-md-6">
-                <p for="first_name" class=" font-weight-normal">
-                    Notes - <b> {{$appointment->notes}}</b>
-                </p>
-            </div>
-            <hr/>
-            <div class="col-md-12 text-center mb-5">
-                <h3>Patient Details</h3>
-            </div>
-            @if($appointment->user->patient)
-             @php
-                $patient = $appointment->user->patient;
-             @endphp
             <div class="col-md-4">
-                <p for="first_name" class=" font-weight-normal">
-                    First Name - <b> {{$patient->first_name}}</b>
-                </p>
-            </div>
-            <div class="col-md-4">
-                <p for="first_name" class=" font-weight-normal">
-                    Last Name - <b> {{$patient->last_name}}</b>
-                </p>
-                     
-            </div>
-            {{-- <div class="col-md-4">
-                <p for="first_name" class=" font-weight-normal">
-                    UMR NO  - <b> {{$patient->umr_no}}</b> 
-                </p>
-                <p for="first_name" class=" font-weight-normal">
-                    OP NO -  <b> {{$patient->op_no}}</b>
-                </p>
-                     
-            </div>
-            <div class="col-md-4">
-                <p for="first_name" class=" font-weight-normal">
-                    Father name - <b> {{$patient->father_name}}</b>
-                    <br>
-                    Occupation - <b>{{$patient->father_occupation}}</b>
-                </p>
-            </div>
-            <div class="col-md-4">
-                <p for="first_name" class=" font-weight-normal">
-                    Mother Name - <b> {{$patient->mother_name}}</b>
-                    <br>
-                    Occupation - <b>{{$patient->mother_occupation}}</b>
-                </p>
-            </div> --}}
-            <div class="col-md-4">
-                <p for="first_name" class=" font-weight-normal">
-                    Gender / Age - <b> {{$patient->gender}} / {{$patient->age}}</b>
-                    <br>
-                    
-                </p>
-            </div>
-            {{-- <div class="col-md-4">
-                <p for="first_name" class=" font-weight-normal">
-                    D O B - <b>{{$patient->d_o_b}}</b>
-                </p>
-            </div>
-            <div class="col-md-4">
-                <p for="first_name" class=" font-weight-normal">
-                    Blood Group - <b>{{$patient->blood_group}}</b>
-                </p>
-            </div> --}}
-            @endif
-            {{-- <div class="col-6 col-md-6">
-                @if(isset($patient->first_name))
-                <p class="">Name: <b>{{$patient->first_name.' '.$patient->last_name}}</b></p>
-                @endif
-            </div>
-            <div class="col-6 col-md-6">
-                <p class="">Weight:  </p>
-               
-            </div>
-            <div class="col-6 col-md-6">
-                @if(isset($patient->patient))
-                <p class="">Age: <b>{{$patient->patient->age}}</b> &emsp; , &nbsp; Gender: <b>{{ucfirst($patient->patient->gender)}}</b></p>
-                @endif
-            </div>
-            <div class="col-6 col-md-6">
-                @if(isset($patient->patient))
-                <p class="">OP NO: <b>{{$patient->patient->op_no}}</b>  </p>
-                @endif
-            </div> --}}
-        </div>                  
-    </div>
-    <div class="row p-5">
-
-       {{-- <h1>&#8478;</h1>  --}}
-       <div class="col-12 col-md-12">
-           {{-- @if($data->prescriptionMedicine)
-             @foreach($data->prescriptionMedicine as $p_medicine)
-              @php
-                $frame_data = array(
-                  'id' => $p_medicine->id,
-                  'medicine_id' => $p_medicine->medicine_id,
-                  'total_qty' => $p_medicine->total_qty,
-                  'intake_qty' => $p_medicine->intake_qty,
-                  'timing_when' => $p_medicine->timing_when,
-                  'timing_how' => $p_medicine->timing_how,
-                  'duration' => $p_medicine->duration,
-                );
-                $medicine_details = getMedcineDetail($p_medicine->medicine_id);
-              @endphp
-
-                <div class="row pb-2 pt-2 medicine_dot_line">
-                  <div class="col-md-9">
-                    <h4>{{$medicine_details->name.' '.$medicine_details->dosage}}</h4>&nbsp;
-                    <span>Qty:<b>{{$p_medicine->total_qty}}</b></span>&nbsp;
-                    <span>Intake:<b>{{$p_medicine->intake_qty}}</b></span>&nbsp;
-                    <span>When:<b>{{$p_medicine->timing_when}}</b></span>&nbsp;
-                    <span>How:<b>{{$p_medicine->timing_how}}</b></span>&nbsp;
-                    <span>Duration:<b>{{$p_medicine->duration}}</b></span>&nbsp;
-                  </div>
+                <div class="patient-info">
+                    @if($appointment->first_name)
+                    <p>
+                        <span><b>Patient Name</b></span>
+                        <span class="separator">-</span>
+                        <span>{{$patient->first_name.' '.$patient->last_name}}</span>
+                    </p>
+                    @endif
+                    @if($appointment->appoinment_date)
+                    <p>
+                        <span><b>Appoinment Date & Session</b></span>
+                        <span class="separator">-</span>
+                        <span>{{$appointment->appoinment_date}} / {{ucfirst($appointment->appoinment_session)}}</span>
+                    </p>
+                    @endif
+                    @if($appointment->father_name)
+                    <p>
+                        <span><b>Father Name</b></span>
+                        <span class="separator">-</span>
+                        <span>{{$appointment->father_name}}</span>
+                    </p>
+                    @endif
                 </div>
-              @endforeach
-              
-            @endif --}}
+            </div>
+
+            <div class="col-md-4">
+                <div class="patient-info">
+                    @if($appointment->specialists)
+                    <p>
+                        <span><b>Need to see</b></span>
+                        <span class="separator">-</span>
+                        <span>{{$appointment->specialists}}</span>
+                    </p>
+                    @endif
+                    @if($appointment->appoinment_time)
+                    <p>
+                        <span><b>Appoinment Time</b></span>
+                        <span class="separator">-</span>
+                        <span>{{$appointment->appoinment_time}}</span>
+                    </p>
+                    @endif
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="patient-info">
+                    @if($patient->umr_no)
+                    <p>
+                        <span><b>UMR No</b></span>
+                        <span class="separator">-</span>
+                        <span>{{$patient->umr_no}}</span>
+                    </p>
+                    @endif
+                    @if($patient->op_no)
+                    <p>
+                        <span><b>OP NO</b></span>
+                        <span class="separator">-</span>
+                        <span>{{$patient->op_no}}</span>
+                    </p>
+                    @endif
+                </div>
+            </div>
+            
        </div>
     </div>
    {{--  

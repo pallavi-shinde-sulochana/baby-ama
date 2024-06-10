@@ -33,12 +33,12 @@
                 $typ = '';
             }
             ?>
-            <form
+            {{-- <form
                 action="{{ route('doctor.patient.clinical_notes.post', ['patient' => $user->patient->id]) }}"
-                method="POST">
-                {{-- <form
-                action="{{ route('doctor.patient.clinical_notes.post', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'type' => $typ]) }}"
                 method="POST"> --}}
+                <form
+                action="{{ route('doctor.patient.clinical_notes.post', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'type' => $typ]) }}"
+                method="POST">
                 @csrf
                 <div class="head baby-shadow py-3 px-5 mb-4">
                     <div class="row px-5 py-4 align-items-center">
