@@ -1241,24 +1241,31 @@ class DoctorController extends Controller
 
     return view('pages.doctor.patient.clinical_notes_add', compact('user','patient','appoinment','data'));
     }
-    public function PostClinicalNotesForm(Request $request, Patient $patient){
+    public function PostClinicalNotesForm(Request $request, Patient $patient)
+{
+    $data = $request->except('_token');
+    $type = $request->prescription_type;
 
-        $data = $request->except('_token');
-        $type = $request->prescription_type;
+    // Find the existing ClinicalNotes entry for the patient
+    $formSave = ClinicalNotes::where('patient_id', $patient->id)->first();
+
+    if ($formSave === null) {
+        // If no existing record, create a new instance
         $formSave = new ClinicalNotes();
-        $formSave->patient_id=$patient->id;
-
-            if($type=='pediatric'){
-            $formSave->pediatric = json_encode($data);
-            }
-
-            else{
-                $formSave->dental = json_encode($data);
-            }
-
-        $formSave->save();
-        return redirect()->back()->with('success', 'Clinical Notes Saved Successfuly');
+        $formSave->patient_id = $patient->id;
     }
+
+    if ($type == 'pediatric') {
+        $formSave->pediatric = json_encode($data);
+    } else {
+        $formSave->dental = json_encode($data);
+    }
+
+    $formSave->save();
+
+    return redirect()->back()->with('success', 'Clinical Notes Saved Successfully');
+}
+
     /* public function GetPrescriptionDetailAll(Request $request, Appoinment $appoinment,Patient $patient)
     {
 
