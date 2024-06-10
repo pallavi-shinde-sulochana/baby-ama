@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Patient;
 use App\Models\User;
+use App\Models\Patient;
+use App\Models\Medicine;
+use App\Models\UserInfo;
 use App\Models\Appoinment;
 use App\Models\Prescription;
-use App\Models\UserInfo;
+use Illuminate\Http\Request;
+use App\Models\PrescriptionMedicine;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
@@ -566,7 +568,6 @@ class AdminController extends Controller
 
 
     }
-
     public function appointmentBilling($appointment){
         // Find the appointment
         $appointment = Appoinment::find($appointment);
@@ -609,14 +610,131 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'No doctors found.');
         }
 
-        $type  = 'pediatric';
-        $pr_id = $getdata->id;
-        $pres = PrescriptionMedicine::where(['type'=>$type,'prescription_id'=>$pr_id])->get();
+        // Get the latest prescription data
+        $latestPrescription = Prescription::orderBy('id', 'DESC')->first();
 
+        // Initialize an empty array for prescriptions
+        $prescriptions = [];
+
+        // Check if a prescription exists
+        if ($latestPrescription) {
+            // Get prescriptions for the specified type and prescription ID
+            $prescriptions = PrescriptionMedicine::where('type', 'pediatric')
+                ->where('prescription_id', $latestPrescription->id)
+                ->get();
+        }
+
+        $getdata = Prescription::orderBy('id', 'DESC')->first();
+
+        //     if ($getdata) {
+        //     $pr_id = $getdata->id;
+        //     $type = 'pediatric';
+        //     $pres = PrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
+        // }
+
+        $type = 'general';
+        $pres = PrescriptionMedicine::where(['type' => $type, 'prescription_id' => $getdata->id])->get();
+
+        // If no general prescriptions found, get pediatric prescriptions
+        if ($pres->isEmpty()) {
+            $type = 'pediatric';
+            $pres = PrescriptionMedicine::where(['type' => $type, 'prescription_id' => $getdata->id])->get();
+        }
+
+
+        $prescriptions = [];
+
+        // Initialize an empty array for pharmacy bill medicines
+        $pharmacyBillMedicines = [];
+
+        // Check if a prescription exists
+         $pres = collect();
+        $type = null;
+
+        if ($latestPrescription) {
+            // Try to get general type prescriptions
+            $pres = PrescriptionMedicine::where('type', 'general')
+                ->where('prescription_id', $latestPrescription->id)
+                ->get();
+
+            // If no general type prescriptions found, get pediatric type prescriptions
+            if ($pres->isEmpty()) {
+                $pres = PrescriptionMedicine::where('type', 'pediatric')
+                    ->where('prescription_id', $latestPrescription->id)
+                    ->get();
+                $type = 'pediatric';
+            } else {
+                $type = 'general';
+            }
+
+            // Retrieve medicine IDs from prescriptions
+            $medicineIds = $pres->pluck('medicine_id')->toArray();
+
+            // Get pharmacy bill medicines based on medicine IDs
+            $pharmacyBillMedicines = Medicine::whereIn('id', $medicineIds)->get();
+        }
+
+        //dd($pharmacyBillMedicines);
 
         // Return the view with the necessary data
-        return view('pages.admin.patient.appointment-billing', compact('pres','appointment', 'doctor', 'userInfo', 'specialistTypes', 'doctorlist'));
+        return view('pages.admin.patient.appointment-billing', compact('pharmacyBillMedicines','pres','prescriptions', 'appointment', 'doctor', 'userInfo', 'specialistTypes', 'doctorlist'));
     }
+
+
+    // public function appointmentBilling($appointment){
+    //     // Find the appointment
+    //     $appointment = Appoinment::find($appointment);
+
+    //     // Check if the appointment exists
+    //     if (!$appointment) {
+    //         // Redirect the user or show an error message
+    //         return redirect()->back()->with('error', 'Appointment not found.');
+    //     }
+
+    //     // Find the doctor
+    //     $doctor = User::find($appointment->doctor_id);
+
+    //     // Check if the doctor exists
+    //     if (!$doctor) {
+    //         // Redirect the user or show an error message
+    //         return redirect()->back()->with('error', 'Doctor not found.');
+    //     }
+
+    //     // Find the user info
+    //     $userInfo = UserInfo::where('user_id', $doctor->id)->first();
+
+    //     // Check if the user info exists
+    //     if (!$userInfo) {
+    //         // Redirect the user or show an error message
+    //         return redirect()->back()->with('error', 'User info not found.');
+    //     }
+
+    //     // Get the specialist types
+    //     $specialistTypes = UserInfo::pluck('specialist_type', 'id')->unique();
+
+    //     // Get the list of doctors
+    //     $doctorlist = User::with('roles')->whereHas('roles', function($q) {
+    //         $q->where('name', 'doctor');
+    //     })->get()->pluck('full_name', 'id');
+
+    //     // Check if the doctor list is empty
+    //     if ($doctorlist->isEmpty()) {
+    //         // Redirect the user or show an error message
+    //         return redirect()->back()->with('error', 'No doctors found.');
+    //     }
+
+
+    //     $getdata = Prescription::orderBy('id', 'DESC')->first();
+
+    //     if ($getdata) {
+    //         $pr_id = $getdata->id;
+    //         $type = 'pediatric';
+    //         $pres = PrescriptionMedicine::where(['type' => $type, 'prescription_id' => $pr_id])->get();
+    //     }
+
+    //     // Return the view with the necessary data
+    //     return view('pages.admin.patient.appointment-billing', compact('pres','appointment', 'doctor', 'userInfo', 'specialistTypes', 'doctorlist'));
+    // }
 
 
     // public function appointmentBilling($appointment){

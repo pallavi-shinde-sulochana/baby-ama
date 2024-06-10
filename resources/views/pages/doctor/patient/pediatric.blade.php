@@ -1929,7 +1929,8 @@
                             <?php } else { ?>
                             <div class="tooltip1">
 
-                                <a class="baby-primary-btn" href="{{ route('doctor.appointment.patient.prescription.medicine', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'pr_id' => $data->id, 'type' => 'general']) }}">+ Add Prescriptions</a>
+                                <a class="baby-primary-btn" href="{{ route('doctor.appointment.patient.prescription.medicine', ['appoinment' => $appoinment->id, 'patient' => $user->patient->id, 'pr_id' => 
+                                0, 'type' => 'general']) }}">+ Add Prescriptions</a>
                                 <span class="tooltip_text">Please update the paediatric case record form</span>
                             </div>
                             <?php } ?>
