@@ -168,6 +168,21 @@ final class AppoinmentTable extends PowerGridComponent
                 return $app->appoinment_session;
             })
 
+            ->addColumn('status', function (Appoinment $app) {
+                // Return a button with red color if the status is "completed"
+                if ($app->status == 'completed') {
+                    return '<button class="btn btn-sm bg-success text-white">' . ucfirst($app->status) . '</button>';
+                }elseif($app->status == 'assigned') {
+                    return '<button class="btn btn-sm bg-primary text-white">' . ucfirst($app->status) . '</button>';
+                }elseif($app->status == 'awaiting') {
+                    return '<button class="btn btn-sm bg-warning text-white">' . ucfirst($app->status) . '</button>';
+                }else {
+                    return ucfirst($app->status);
+                }
+                
+                
+            });
+
             
             
             ;

@@ -69,46 +69,36 @@
                if($role === 'therapist') $available_specialist_types = getTherapistSpecialistType();
 	       @endphp
 	       <label for="select_user_role" class="form-label">{{ucfirst($role)}} Specialist Type</label>
-            <div class="row">
-                @php
-                  if(isset($data->info->specialist_type)){
-
-                    $getType = ($data->info->specialist_type) ? json_decode($data->info->specialist_type) : [];
-
-                        if($getType){
-                            try{
-
-                            $getType = implode(',',$getType);
-                            }catch(Exception $e){
-                                $getType=$getType;
-                            }
+           <div class="row">
+            @php
+                $getType = '';
+        
+                if (isset($data->info->specialist_type)) {
+                    $decodedType = json_decode($data->info->specialist_type, true); // Ensure we get an array
+                    
+                    if (is_array($decodedType)) {
+                        try {
+                            $getType = implode(',', $decodedType);
+                        } catch (Exception $e) {
+                            $getType = $data->info->specialist_type;
                         }
-                  }else{
-                    $getType='';
-                  }
-
-                @endphp
-                @if($getType)
-                     <input type="text" class="form-control" id="specialist_type" placeholder="Enter Specialization" name="specialist_type" autocomplete="off" value="{{isset($getType) ? $getType : old('specialist_type')}}">
-                @else
-
-                 <input type="text" class="form-control" id="specialist_type" placeholder="Enter Specialization" name="specialist_type" autocomplete="off" value="{{ old('specialist_type')}}">
-                 @endif
-                @if($errors->has('specialist_type'))
-                    <span class="text-danger">{{ $errors->first('specialist_type') }}</span>
-                @endif
-
-               {{--  @foreach($available_specialist_types as $slug => $specialist_type)
-                    <div class="col-12 mt-2">
-                       <label class="form-check form-check-custom form-check-solid">
-                            <input class="form-check-input" type="checkbox" value="{{$slug}}" name="specialist_type[]" @if((is_array(old('specialist_type')) && in_array($slug,old('specialist_type'))) || in_array($slug,$s_type)) checked  @endif/>
-                            <span class="form-check-label">
-                                {{$specialist_type}}
-                            </span>
-                        </label>
-                    </div>
-                @endforeach --}}
-            </div>
+                    } else {
+                        $getType = $data->info->specialist_type;
+                    }
+                }
+            @endphp
+        
+            @if($getType)
+                <input type="text" class="form-control" id="specialist_type" placeholder="Enter Specialization" name="specialist_type" autocomplete="off" value="{{ $getType }}">
+            @else
+                <input type="text" class="form-control" id="specialist_type" placeholder="Enter Specialization" name="specialist_type" autocomplete="off" value="{{ old('specialist_type') }}">
+            @endif
+        
+            @if($errors->has('specialist_type'))
+                <span class="text-danger">{{ $errors->first('specialist_type') }}</span>
+            @endif
+        </div>
+        
        @endif
     </div>
 </div>

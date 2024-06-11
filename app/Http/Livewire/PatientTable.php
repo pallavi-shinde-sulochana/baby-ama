@@ -57,7 +57,7 @@ final class PatientTable extends PowerGridComponent
     */
     public function datasource(): ?Builder
     {
-        return Patient::query()->orderBy('id','desc');
+        return Patient::query();
     }
 
     /*
