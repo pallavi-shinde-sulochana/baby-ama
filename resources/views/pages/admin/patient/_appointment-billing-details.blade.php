@@ -78,7 +78,7 @@ $patient = $appointment->user->patient;
 
 <div class="col-md-4 pt-4">
     <div class="patient-info">
-        @if($doctor->first_name && $doctor->last_name)
+        @if($doctor->first_name)
             <p>
                 <span><b>Doctor Name</b></span>
                 <span class="separator">:</span>

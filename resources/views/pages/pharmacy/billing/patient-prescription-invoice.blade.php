@@ -84,7 +84,9 @@
                         <p> {{ ucfirst($user->first_name)." ".ucfirst($user->last_name) }} <br>
                             {{ $user->address }}<br>
                             
-                            PH. No. {{ ($user->father_phone)." ".($user->mother_phone) }}.</p>
+                            PH. No. {{ ($user->father_phone)." ".($user->mother_phone) }}.<br>
+                            UMR No. {{ ($user->umr_no) }}<br>
+                            OP No. {{ ($user->op_no) }}</p>
                     </div>
                 </div>
             </div>

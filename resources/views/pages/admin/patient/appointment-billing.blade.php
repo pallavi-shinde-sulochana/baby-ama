@@ -82,6 +82,15 @@
                                                 </select>
                                             </div>
 
+                                            <div class="col-md-6 mb-12" id="fees" style="display: none;">
+                                                <label for="fees" class="form-label">Fess</label>
+                                                <input type="text" class="form-control" id="fees"
+                                                    name="doctor_fee"
+                                                    value="{{old('fees', $appointment->fees)}}"
+                                                    placeholder="Enter here">
+                                            </div>
+                                            </div>
+
                                             <hr />
 
                                             <div class="col-12 mt-5 text-center">
@@ -126,16 +135,19 @@
     document.getElementById('addDoctorButton').addEventListener('click', function() {
         var doctorFields = document.getElementById('doctorFields');
         var specialistFields = document.getElementById('specialistFields');
+        var fees = document.getElementById('fees');
         var saveButton = document.getElementById('saveButton');
 
         if (doctorFields.style.display === 'none') {
             doctorFields.style.display = 'block';
             specialistFields.style.display = 'block';
+            fees.style.display = 'block';
             saveButton.style.display = 'block';
             this.textContent = 'Hide Doctor Fields';
         } else {
             doctorFields.style.display = 'none';
             specialistFields.style.display = 'none';
+            fees.style.display = 'none';
             saveButton.style.display = 'none';
             this.textContent = 'Add Doctor';
         }

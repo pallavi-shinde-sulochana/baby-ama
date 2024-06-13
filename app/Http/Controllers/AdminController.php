@@ -758,6 +758,7 @@ class AdminController extends Controller
             $appointment->notes = $req->notes;
             $appointment->assigned_doctor = $req->doctor_id;
             $appointment->assigned_specialists = $req->specialists;
+            $appointment->fees = $req->fees;
             $appointment->save();
         }
         return redirect()->back()->with('success', 'Appointment Fees Data Updated Successfully');
